@@ -1,0 +1,26 @@
+{
+  "app": {
+    "title": "MyMidwife"
+  },
+  "nav": {
+    "menu": "Toggle menu",
+    "search": "Search",
+    "notifications": "Notifications",
+    "home": "Home",
+    "appointments": "Appointments",
+    "chat": "Chat",
+    "diary": "Diary",
+    "nutrition": "Nutrition",
+    "bmi": "BMI Calculator"
+  },
+  "user": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "language": "Language",
+    "logout": "Logout"
+  },
+  "language": {
+    "english": "English",
+    "polish": "Polish"
+  }
+}

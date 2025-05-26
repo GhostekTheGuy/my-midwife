@@ -12,6 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Calculator, Info, Save, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { Utensils } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 interface BMIResult {
   value: number
@@ -22,6 +23,7 @@ interface BMIResult {
 }
 
 export function BMICalculator() {
+  const { t } = useLanguage()
   const [units, setUnits] = useState<"metric" | "imperial">("metric")
   const [height, setHeight] = useState("")
   const [weight, setWeight] = useState("")
@@ -55,7 +57,7 @@ export function BMICalculator() {
     if (bmi < 18.5) {
       return {
         value: bmi,
-        category: "Underweight",
+        category: t("bmi.categories.underweight"),
         color: "text-blue-600",
         recommendations: [
           "Consult with a healthcare provider about healthy weight gain",
@@ -73,7 +75,7 @@ export function BMICalculator() {
     } else if (bmi >= 18.5 && bmi < 25) {
       return {
         value: bmi,
-        category: "Normal weight",
+        category: t("bmi.categories.normal"),
         color: "text-green-600",
         recommendations: [
           "Maintain your current healthy lifestyle",
@@ -86,7 +88,7 @@ export function BMICalculator() {
     } else if (bmi >= 25 && bmi < 30) {
       return {
         value: bmi,
-        category: "Overweight",
+        category: t("bmi.categories.overweight"),
         color: "text-yellow-600",
         recommendations: [
           "Aim for gradual weight loss (1-2 pounds per week)",
@@ -104,7 +106,7 @@ export function BMICalculator() {
     } else {
       return {
         value: bmi,
-        category: "Obese",
+        category: t("bmi.categories.obese"),
         color: "text-red-600",
         recommendations: [
           "Consult with healthcare providers for a weight management plan",
@@ -123,7 +125,6 @@ export function BMICalculator() {
   }
 
   const getBMIProgress = (bmi: number) => {
-    // Map BMI to a 0-100 scale for visual representation
     if (bmi < 18.5) return (bmi / 18.5) * 25
     if (bmi < 25) return 25 + ((bmi - 18.5) / (25 - 18.5)) * 50
     if (bmi < 30) return 75 + ((bmi - 25) / (30 - 25)) * 20
@@ -132,9 +133,7 @@ export function BMICalculator() {
 
   const saveBMIResult = () => {
     if (result) {
-      // In a real app, this would save to a database or local storage
       console.log("Saving BMI result:", result)
-      // Show success message
     }
   }
 
@@ -144,21 +143,21 @@ export function BMICalculator() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5 text-pink-600" />
-            BMI Calculator
+            {t("bmi.title")}
           </CardTitle>
-          <CardDescription>Enter your height and weight to calculate your Body Mass Index</CardDescription>
+          <CardDescription>{t("bmi.description")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <Label>Units</Label>
+            <Label>{t("bmi.units")}</Label>
             <RadioGroup value={units} onValueChange={(value) => setUnits(value as "metric" | "imperial")}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="metric" id="metric" />
-                <Label htmlFor="metric">Metric (cm, kg)</Label>
+                <Label htmlFor="metric">{t("bmi.metric")}</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="imperial" id="imperial" />
-                <Label htmlFor="imperial">Imperial (ft, in, lbs)</Label>
+                <Label htmlFor="imperial">{t("bmi.imperial")}</Label>
               </div>
             </RadioGroup>
           </div>
@@ -166,7 +165,7 @@ export function BMICalculator() {
           {units === "metric" ? (
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="height">Height (cm)</Label>
+                <Label htmlFor="height">{t("bmi.height")} (cm)</Label>
                 <Input
                   id="height"
                   type="number"
@@ -176,7 +175,7 @@ export function BMICalculator() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="weight">Weight (kg)</Label>
+                <Label htmlFor="weight">{t("bmi.weight")} (kg)</Label>
                 <Input
                   id="weight"
                   type="number"
@@ -189,7 +188,7 @@ export function BMICalculator() {
           ) : (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Height</Label>
+                <Label>{t("bmi.height")}</Label>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <Input
@@ -198,7 +197,7 @@ export function BMICalculator() {
                       value={heightFeet}
                       onChange={(e) => setHeightFeet(e.target.value)}
                     />
-                    <Label className="text-xs text-muted-foreground">feet</Label>
+                    <Label className="text-xs text-muted-foreground">{t("bmi.feet")}</Label>
                   </div>
                   <div>
                     <Input
@@ -207,12 +206,12 @@ export function BMICalculator() {
                       value={heightInches}
                       onChange={(e) => setHeightInches(e.target.value)}
                     />
-                    <Label className="text-xs text-muted-foreground">inches</Label>
+                    <Label className="text-xs text-muted-foreground">{t("bmi.inches")}</Label>
                   </div>
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="weight-lbs">Weight (lbs)</Label>
+                <Label htmlFor="weight-lbs">{t("bmi.weight")} (lbs)</Label>
                 <Input
                   id="weight-lbs"
                   type="number"
@@ -225,7 +224,7 @@ export function BMICalculator() {
           )}
 
           <Button onClick={calculateBMI} className="w-full" size="lg">
-            Calculate BMI
+            {t("bmi.calculate")}
           </Button>
 
           <Alert>
@@ -242,7 +241,7 @@ export function BMICalculator() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Your BMI Result</CardTitle>
+              <CardTitle>{t("bmi.result")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="text-center">
@@ -254,31 +253,31 @@ export function BMICalculator() {
 
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span>BMI Scale</span>
+                  <span>{t("bmi.scale")}</span>
                   <span>{result.value.toFixed(1)}</span>
                 </div>
                 <Progress value={getBMIProgress(result.value)} className="h-3" />
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Underweight</span>
-                  <span>Normal</span>
-                  <span>Overweight</span>
-                  <span>Obese</span>
+                  <span>{t("bmi.categories.underweight")}</span>
+                  <span>{t("bmi.categories.normal")}</span>
+                  <span>{t("bmi.categories.overweight")}</span>
+                  <span>{t("bmi.categories.obese")}</span>
                 </div>
               </div>
 
               <div className="flex gap-2">
                 <Button onClick={saveBMIResult} variant="outline" className="flex-1">
                   <Save className="h-4 w-4 mr-2" />
-                  Save Result
+                  {t("bmi.saveResult")}
                 </Button>
                 <Button variant="outline" className="flex-1">
                   <TrendingUp className="h-4 w-4 mr-2" />
-                  View Trends
+                  {t("bmi.viewTrends")}
                 </Button>
                 <Button variant="outline" className="flex-1" asChild>
                   <Link href="/nutrition">
                     <Utensils className="h-4 w-4 mr-2" />
-                    Nutrition Plan
+                    {t("bmi.nutritionPlan")}
                   </Link>
                 </Button>
               </div>
@@ -287,11 +286,11 @@ export function BMICalculator() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Recommendations</CardTitle>
+              <CardTitle>{t("bmi.recommendations")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-medium mb-2">Health Recommendations:</h4>
+                <h4 className="font-medium mb-2">{t("bmi.healthRecommendations")}</h4>
                 <ul className="space-y-1">
                   {result.recommendations.map((rec, index) => (
                     <li key={index} className="text-sm flex items-start gap-2">
@@ -303,7 +302,7 @@ export function BMICalculator() {
               </div>
 
               <div>
-                <h4 className="font-medium mb-2">Health Considerations:</h4>
+                <h4 className="font-medium mb-2">{t("bmi.healthConsiderations")}</h4>
                 <ul className="space-y-1">
                   {result.healthRisks.map((risk, index) => (
                     <li key={index} className="text-sm flex items-start gap-2">
@@ -321,12 +320,8 @@ export function BMICalculator() {
               <div className="flex items-start gap-3">
                 <Info className="h-5 w-5 text-pink-600 mt-0.5" />
                 <div>
-                  <h4 className="font-medium text-pink-800">Important Note</h4>
-                  <p className="text-sm text-pink-700 mt-1">
-                    This BMI calculator is for informational purposes only. For personalized health advice, especially
-                    during pregnancy or if you have health conditions, please consult with your midwife or healthcare
-                    provider.
-                  </p>
+                  <h4 className="font-medium text-pink-800">{t("bmi.importantNote")}</h4>
+                  <p className="text-sm text-pink-700 mt-1">{t("bmi.disclaimer")}</p>
                 </div>
               </div>
             </CardContent>

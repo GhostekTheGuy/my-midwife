@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "MyMidwife"
+  },
+  "nav": {
+    "menu": "Przełącz menu",
+    "search": "Szukaj",
+    "notifications": "Powiadomienia",
+    "home": "Strona główna",
+    "appointments": "Wizyty",
+    "chat": "Czat",
+    "diary": "Dziennik",
+    "nutrition": "Żywienie",
+    "bmi": "Kalkulator BMI"
+  },
+  "user": {
+    "profile": "Profil",
+    "settings": "Ustawienia",
+    "language": "Język",
+    "logout": "Wyloguj"
+  },
+  "language": {
+    "english": "Angielski",
+    "polish": "Polski"
+  },
+  "midwife": {
+    "find_midwives": "Znajdź położne",
+    "search_midwives": "Szukaj położnych...",
+    "no_midwives_found": "Nie znaleziono położnych",
+    "find_midwife": "Znajdź położną",
+    "midwife_profile": "Profil położnej",
+    "start_chat_with_midwife": "Rozpocznij rozmowę z położną",
+    "consult_with_midwife": "skonsultuj się z położną"
+  }
+}

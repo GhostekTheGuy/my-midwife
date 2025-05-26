@@ -1,32 +1,45 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "@/app/globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { BottomNavigation } from "@/components/bottom-navigation"
+import "./globals.css"
 import { TopNavigation } from "@/components/top-navigation"
+import { BottomNavigation } from "@/components/bottom-navigation"
+import { DesktopSidebar } from "@/components/desktop-sidebar"
+import { LanguageProvider } from "@/contexts/language-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "MyMidwife",
-  description: "Connect with midwives for your intimate and perinatal health needs",
+  title: "MyMidwife - Comprehensive Midwifery Care",
+  description: "Connect with certified midwives, track your pregnancy journey, and access personalized care.",
     generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-pink-50/30 min-h-screen flex flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <TopNavigation />
-          <main className="flex-1 container mx-auto px-4 py-4 mb-16">{children}</main>
-          <BottomNavigation />
-        </ThemeProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <LanguageProvider>
+          <div className="flex min-h-screen">
+            {/* Desktop Sidebar */}
+            <DesktopSidebar />
+
+            {/* Main Content Area */}
+            <div className="flex-1 flex flex-col md:ml-64">
+              <TopNavigation />
+              <main className="flex-1 p-4 md:p-6 pb-16 md:pb-6">
+                <div className="max-w-7xl mx-auto">{children}</div>
+              </main>
+
+              {/* Mobile Bottom Navigation */}
+              <BottomNavigation />
+            </div>
+          </div>
+        </LanguageProvider>
       </body>
     </html>
   )

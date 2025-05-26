@@ -1,15 +1,20 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, MapPin, MessageCircle, Star, Video } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 interface AppointmentListProps {
   type: "upcoming" | "past"
 }
 
 export function AppointmentList({ type }: AppointmentListProps) {
+  const { t } = useLanguage()
+
   // This would normally come from an API or state
   const upcomingAppointments = [
     {
@@ -82,22 +87,35 @@ export function AppointmentList({ type }: AppointmentListProps) {
       <Card className="bg-pink-50/50">
         <CardContent className="p-6 flex flex-col items-center text-center">
           <Calendar className="h-12 w-12 text-pink-300 mb-4" />
-          <h3 className="text-lg font-medium">No {type} appointments</h3>
+          <h3 className="text-lg font-medium">
+            {type === "upcoming" ? t("appointments.noUpcoming") : t("appointments.noPast")}
+          </h3>
           {type === "upcoming" ? (
-            <p className="text-sm text-muted-foreground mt-2 mb-4">
-              You don't have any scheduled appointments. Find a midwife and book your visit.
-            </p>
+            <p className="text-sm text-muted-foreground mt-2 mb-4">{t("appointments.noAppointments")}</p>
           ) : (
             <p className="text-sm text-muted-foreground mt-2">You don't have any past appointments.</p>
           )}
           {type === "upcoming" && (
             <Button asChild>
-              <Link href="/search">Find a Midwife</Link>
+              <Link href="/search">{t("appointments.findMidwife")}</Link>
             </Button>
           )}
         </CardContent>
       </Card>
     )
+  }
+
+  const getAppointmentType = (type: string) => {
+    switch (type) {
+      case "Online Consultation":
+        return t("appointments.types.online")
+      case "In-Office Visit":
+        return t("appointments.types.office")
+      case "Home Visit":
+        return t("appointments.types.home")
+      default:
+        return type
+    }
   }
 
   return (
@@ -134,27 +152,27 @@ export function AppointmentList({ type }: AppointmentListProps) {
                     ) : (
                       <MapPin className="h-4 w-4 text-pink-600" />
                     )}
-                    <span>{appointment.type}</span>
+                    <span>{getAppointmentType(appointment.type)}</span>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 pt-2">
                   {type === "upcoming" ? (
                     <>
                       <Button variant="outline" size="sm" className="h-8">
-                        Reschedule
+                        {t("appointments.reschedule")}
                       </Button>
                       <Button variant="outline" size="sm" className="h-8">
-                        Cancel
+                        {t("appointments.cancel")}
                       </Button>
                       {appointment.type === "Online Consultation" && (
                         <Button size="sm" className="h-8 ml-auto">
-                          Join
+                          {t("appointments.join")}
                         </Button>
                       )}
                       <Button size="sm" className="h-8" asChild>
                         <Link href={`/chat/${appointment.midwife.id}`}>
                           <MessageCircle className="h-4 w-4 mr-1" />
-                          Message
+                          {t("appointments.message")}
                         </Link>
                       </Button>
                     </>
@@ -163,15 +181,15 @@ export function AppointmentList({ type }: AppointmentListProps) {
                       {!appointment.hasReview ? (
                         <Button size="sm" className="h-8">
                           <Star className="h-4 w-4 mr-1" />
-                          Leave Review
+                          {t("appointments.review")}
                         </Button>
                       ) : (
                         <Badge variant="outline" className="bg-green-50 text-green-700">
-                          Reviewed
+                          {t("appointments.reviewed")}
                         </Badge>
                       )}
                       <Button variant="outline" size="sm" className="h-8 ml-auto">
-                        Book Again
+                        {t("appointments.bookAgain")}
                       </Button>
                     </>
                   )}
