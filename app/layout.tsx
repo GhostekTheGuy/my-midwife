@@ -1,13 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Poppins } from "next/font/google"
 import "./globals.css"
 import { TopNavigation } from "@/components/top-navigation"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { DesktopSidebar } from "@/components/desktop-sidebar"
 import { LanguageProvider } from "@/contexts/language-context"
 
-const inter = Inter({ subsets: ["latin"] })
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+})
 
 export const metadata: Metadata = {
   title: "MyMidwife - Comprehensive Midwifery Care",
@@ -22,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <LanguageProvider>
           <div className="flex min-h-screen">
             {/* Desktop Sidebar */}
