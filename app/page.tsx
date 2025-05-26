@@ -41,8 +41,13 @@ export default function Home() {
                   Find a Midwife
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="bg-transparent border-white text-white hover:bg-white/10">
-                Learn More
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-transparent border-white text-white hover:bg-white/10"
+              >
+                <Link href="/about">About Us</Link>
               </Button>
             </div>
           </div>
