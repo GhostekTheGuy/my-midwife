@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useState } from "react"
 
 // Mock user data - in real app this would come from auth context
 const userData = {
@@ -26,8 +27,41 @@ const userData = {
   initials: "AK",
 }
 
+// Mock notifications data - in real app this would come from a notifications context
 export function TopNavigation() {
   const { t, language, setLanguage } = useLanguage()
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: "Appointment Reminder",
+      message: "Your appointment with Dr. Anna Kowalska is tomorrow at 10:00 AM",
+      time: "2 hours ago",
+      isRead: false,
+      type: "appointment",
+    },
+    {
+      id: 2,
+      title: "New Message",
+      message: "Dr. Anna Kowalska sent you a message",
+      time: "1 day ago",
+      isRead: false,
+      type: "message",
+    },
+    {
+      id: 3,
+      title: "Health Diary Reminder",
+      message: "Don't forget to log your daily health entry",
+      time: "2 days ago",
+      isRead: true,
+      type: "reminder",
+    },
+  ])
+
+  const markAllAsRead = () => {
+    setNotifications((prev) => prev.map((notification) => ({ ...notification, isRead: true })))
+  }
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -74,9 +108,11 @@ export function TopNavigation() {
             <PopoverTrigger asChild>
               <Button variant="ghost" size="icon" className="relative">
                 <Bell className="h-5 w-5" />
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
-                  3
-                </Badge>
+                {unreadCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                    {unreadCount}
+                  </Badge>
+                )}
                 <span className="sr-only">{t("nav.notifications")}</span>
               </Button>
             </PopoverTrigger>
@@ -84,37 +120,34 @@ export function TopNavigation() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium">{t("nav.notifications")}</h4>
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    Mark all as read
+                  <Button variant="ghost" size="sm" className="text-xs" onClick={markAllAsRead}>
+                    {t("notifications.markAllRead")}
                   </Button>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
-                    <div className="w-2 h-2 rounded-full bg-pink-500 mt-2 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">Appointment Reminder</p>
-                      <p className="text-xs text-muted-foreground">
-                        Your appointment with Dr. Anna Kowalska is tomorrow at 10:00 AM
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`flex items-start gap-3 p-3 rounded-lg ${
+                        !notification.isRead ? "bg-pink-50 border border-pink-200" : "hover:bg-gray-50"
+                      }`}
+                    >
+                      <div
+                        className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                          !notification.isRead
+                            ? notification.type === "appointment"
+                              ? "bg-pink-500"
+                              : "bg-blue-500"
+                            : "bg-gray-300"
+                        }`}
+                      ></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">{notification.title}</p>
+                        <p className="text-xs text-muted-foreground">{notification.message}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{notification.time}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">New Message</p>
-                      <p className="text-xs text-muted-foreground">Dr. Anna Kowalska sent you a message</p>
-                      <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
-                    <div className="w-2 h-2 rounded-full bg-gray-300 mt-2 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">Health Diary Reminder</p>
-                      <p className="text-xs text-muted-foreground">Don't forget to log your daily health entry</p>
-                      <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="border-t pt-3">
                   <Button variant="ghost" size="sm" className="w-full text-xs">
@@ -188,9 +221,11 @@ export function TopNavigation() {
             <PopoverTrigger asChild>
               <Button variant="ghost" size="icon" className="relative">
                 <Bell className="h-5 w-5" />
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-xs">
-                  3
-                </Badge>
+                {unreadCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-xs">
+                    {unreadCount}
+                  </Badge>
+                )}
                 <span className="sr-only">{t("nav.notifications")}</span>
               </Button>
             </PopoverTrigger>
@@ -198,37 +233,34 @@ export function TopNavigation() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium">{t("nav.notifications")}</h4>
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    Mark all as read
+                  <Button variant="ghost" size="sm" className="text-xs" onClick={markAllAsRead}>
+                    {t("notifications.markAllRead")}
                   </Button>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
-                    <div className="w-2 h-2 rounded-full bg-pink-500 mt-2 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">Appointment Reminder</p>
-                      <p className="text-xs text-muted-foreground">
-                        Your appointment with Dr. Anna Kowalska is tomorrow at 10:00 AM
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`flex items-start gap-3 p-3 rounded-lg ${
+                        !notification.isRead ? "bg-pink-50 border border-pink-200" : "hover:bg-gray-50"
+                      }`}
+                    >
+                      <div
+                        className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                          !notification.isRead
+                            ? notification.type === "appointment"
+                              ? "bg-pink-500"
+                              : "bg-blue-500"
+                            : "bg-gray-300"
+                        }`}
+                      ></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">{notification.title}</p>
+                        <p className="text-xs text-muted-foreground">{notification.message}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{notification.time}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">New Message</p>
-                      <p className="text-xs text-muted-foreground">Dr. Anna Kowalska sent you a message</p>
-                      <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
-                    <div className="w-2 h-2 rounded-full bg-gray-300 mt-2 flex-shrink-0"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">Health Diary Reminder</p>
-                      <p className="text-xs text-muted-foreground">Don't forget to log your daily health entry</p>
-                      <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="border-t pt-3">
                   <Button variant="ghost" size="sm" className="w-full text-xs">
