@@ -92,27 +92,27 @@ export function TopNavigation() {
                   <div className="flex items-start gap-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
                     <div className="w-2 h-2 rounded-full bg-pink-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{t("notifications.appointmentReminder")}</p>
+                      <p className="text-sm font-medium">Przypomnienie o wizycie</p>
                       <p className="text-xs text-muted-foreground">
-                        {t("notifications.appointmentWith")} Dr. Anna Kowalska {t("notifications.isTomorrow")} 10:00 AM
+                        Twoja wizyta z Dr. Anna Kowalska jest jutro o 10:00
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 godziny temu</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{t("notifications.newMessage")}</p>
-                      <p className="text-xs text-muted-foreground">{t("notifications.from")} Dr. Anna Kowalska</p>
-                      <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
+                      <p className="text-sm font-medium">Nowa wiadomość</p>
+                      <p className="text-xs text-muted-foreground">Dr. Anna Kowalska wysłała wiadomość</p>
+                      <p className="text-xs text-muted-foreground mt-1">1 dzień temu</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-gray-300 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{t("notifications.healthDiaryReminder")}</p>
-                      <p className="text-xs text-muted-foreground">{t("notifications.logHealthEntry")}</p>
-                      <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
+                      <p className="text-sm font-medium">Przypomnienie o dzienniku</p>
+                      <p className="text-xs text-muted-foreground">Nie zapomnij o dzisiejszym wpisie</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 dni temu</p>
                     </div>
                   </div>
                 </div>
@@ -142,15 +142,15 @@ export function TopNavigation() {
                 </div>
               </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem>
                 <Link href="/profile" className="w-full">
                   {t("user.profile")}
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem>
                 <Link href="/settings" className="w-full">
                   {t("user.settings")}
-                </Link>{" "}
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuLabel>{t("user.language")}</DropdownMenuLabel>
@@ -206,28 +206,27 @@ export function TopNavigation() {
                   <div className="flex items-start gap-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
                     <div className="w-2 h-2 rounded-full bg-pink-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{t("notifications.appointmentReminder")}</p>
+                      <p className="text-sm font-medium">Przypomnienie o wizycie</p>
                       <p className="text-xs text-muted-foreground">
-                        {t("notifications.appointmentWith")} Dr. Anna Kowalska {t("notifications.isTomorrow")} at 10:00
-                        AM
+                        Twoja wizyta z Dr. Anna Kowalska jest jutro o 10:00
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 godziny temu</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{t("notifications.newMessage")}</p>
-                      <p className="text-xs text-muted-foreground">{t("notifications.from")} Dr. Anna Kowalska</p>
-                      <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
+                      <p className="text-sm font-medium">Nowa wiadomość</p>
+                      <p className="text-xs text-muted-foreground">Dr. Anna Kowalska wysłała wiadomość</p>
+                      <p className="text-xs text-muted-foreground mt-1">1 dzień temu</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-gray-300 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{t("notifications.healthDiaryReminder")}</p>
-                      <p className="text-xs text-muted-foreground">{t("notifications.logHealthEntry")}</p>
-                      <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
+                      <p className="text-sm font-medium">Przypomnienie o dzienniku</p>
+                      <p className="text-xs text-muted-foreground">Nie zapomnij o dzisiejszym wpisie</p>
+                      <p className="text-xs text-muted-foreground mt-1">2 dni temu</p>
                     </div>
                   </div>
                 </div>
@@ -256,12 +255,12 @@ export function TopNavigation() {
                 </div>
               </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem>
                 <Link href="/profile" className="w-full">
                   {t("user.profile")}
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem>
                 <Link href="/settings" className="w-full">
                   {t("user.settings")}
                 </Link>
