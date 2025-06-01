@@ -85,16 +85,16 @@ export function TopNavigation() {
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium">{t("nav.notifications")}</h4>
                   <Button variant="ghost" size="sm" className="text-xs">
-                    Mark all as read
+                    {t("notifications.markAllRead")}
                   </Button>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
                     <div className="w-2 h-2 rounded-full bg-pink-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">Appointment Reminder</p>
+                      <p className="text-sm font-medium">{t("notifications.appointmentReminder")}</p>
                       <p className="text-xs text-muted-foreground">
-                        Your appointment with Dr. Anna Kowalska is tomorrow at 10:00 AM
+                        {t("notifications.appointmentWith")} Dr. Anna Kowalska {t("notifications.isTomorrow")} 10:00 AM
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
                     </div>
@@ -102,23 +102,23 @@ export function TopNavigation() {
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">New Message</p>
-                      <p className="text-xs text-muted-foreground">Dr. Anna Kowalska sent you a message</p>
+                      <p className="text-sm font-medium">{t("notifications.newMessage")}</p>
+                      <p className="text-xs text-muted-foreground">{t("notifications.from")} Dr. Anna Kowalska</p>
                       <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-gray-300 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">Health Diary Reminder</p>
-                      <p className="text-xs text-muted-foreground">Don't forget to log your daily health entry</p>
+                      <p className="text-sm font-medium">{t("notifications.healthDiaryReminder")}</p>
+                      <p className="text-xs text-muted-foreground">{t("notifications.logHealthEntry")}</p>
                       <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
                     </div>
                   </div>
                 </div>
                 <div className="border-t pt-3">
                   <Button variant="ghost" size="sm" className="w-full text-xs">
-                    View all notifications
+                    {t("notifications.viewAll")}
                   </Button>
                 </div>
               </div>
@@ -199,16 +199,17 @@ export function TopNavigation() {
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium">{t("nav.notifications")}</h4>
                   <Button variant="ghost" size="sm" className="text-xs">
-                    Mark all as read
+                    {t("notifications.markAllRead")}
                   </Button>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 p-3 rounded-lg bg-pink-50 border border-pink-200">
                     <div className="w-2 h-2 rounded-full bg-pink-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">Appointment Reminder</p>
+                      <p className="text-sm font-medium">{t("notifications.appointmentReminder")}</p>
                       <p className="text-xs text-muted-foreground">
-                        Your appointment with Dr. Anna Kowalska is tomorrow at 10:00 AM
+                        {t("notifications.appointmentWith")} Dr. Anna Kowalska {t("notifications.isTomorrow")} at 10:00
+                        AM
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
                     </div>
@@ -216,23 +217,23 @@ export function TopNavigation() {
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">New Message</p>
-                      <p className="text-xs text-muted-foreground">Dr. Anna Kowalska sent you a message</p>
+                      <p className="text-sm font-medium">{t("notifications.newMessage")}</p>
+                      <p className="text-xs text-muted-foreground">{t("notifications.from")} Dr. Anna Kowalska</p>
                       <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50">
                     <div className="w-2 h-2 rounded-full bg-gray-300 mt-2 flex-shrink-0"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">Health Diary Reminder</p>
-                      <p className="text-xs text-muted-foreground">Don't forget to log your daily health entry</p>
+                      <p className="text-sm font-medium">{t("notifications.healthDiaryReminder")}</p>
+                      <p className="text-xs text-muted-foreground">{t("notifications.logHealthEntry")}</p>
                       <p className="text-xs text-muted-foreground mt-1">2 days ago</p>
                     </div>
                   </div>
                 </div>
                 <div className="border-t pt-3">
                   <Button variant="ghost" size="sm" className="w-full text-xs">
-                    View all notifications
+                    {t("notifications.viewAll")}
                   </Button>
                 </div>
               </div>

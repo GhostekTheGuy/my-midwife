@@ -31,6 +31,10 @@ const translations = {
       bmi: "BMI Calculator",
       calendar: "Calendar",
     },
+    notifications: {
+      markAllRead: "Mark all as read",
+      viewAll: "View all notifications",
+    },
     user: {
       profile: "Profile",
       settings: "Settings",
@@ -351,6 +355,10 @@ const translations = {
       nutrition: "Żywienie",
       bmi: "Kalkulator BMI",
       calendar: "Kalendarz",
+    },
+    notifications: {
+      markAllRead: "Oznacz wszystkie jako przeczytane",
+      viewAll: "Zobacz wszystkie powiadomienia",
     },
     user: {
       profile: "Profil",
