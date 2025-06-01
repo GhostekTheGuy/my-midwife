@@ -1,6 +1,3 @@
-"use client"
-
-import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -10,76 +7,74 @@ import { Separator } from "@/components/ui/separator"
 import { MapPin } from "lucide-react"
 
 export function SearchFilters() {
-  const { t } = useLanguage()
-
   return (
     <div className="space-y-6 py-4">
       <div>
-        <h3 className="text-lg font-medium">{t("search.filters")}</h3>
-        <p className="text-sm text-muted-foreground">{t("search.refineResults")}</p>
+        <h3 className="text-lg font-medium">Filters</h3>
+        <p className="text-sm text-muted-foreground">Refine your search results</p>
       </div>
       <Separator />
 
       {/* Location */}
       <div className="space-y-4">
-        <h4 className="font-medium">{t("search.location")}</h4>
+        <h4 className="font-medium">Location</h4>
         <div className="space-y-2">
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder={t("search.city")} className="pl-9" defaultValue="Warsaw" />
+            <Input placeholder="City" className="pl-9" defaultValue="Warsaw" />
           </div>
-          <Input placeholder={t("search.provinceRegion")} />
+          <Input placeholder="Province/Region" />
         </div>
       </div>
       <Separator />
 
       {/* Service Type */}
       <div className="space-y-4">
-        <h4 className="font-medium">{t("search.serviceType")}</h4>
+        <h4 className="font-medium">Service Type</h4>
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <Checkbox id="lactation" defaultChecked />
-            <Label htmlFor="lactation">{t("serviceTypes.lactation")}</Label>
+            <Label htmlFor="lactation">Certified Lactation Consultant</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="psychologist" />
-            <Label htmlFor="psychologist">{t("serviceTypes.psychologist")}</Label>
+            <Label htmlFor="psychologist">Psychologist</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="dietitian" />
-            <Label htmlFor="dietitian">{t("serviceTypes.dietitian")}</Label>
+            <Label htmlFor="dietitian">Dietitian</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="sexologist" />
-            <Label htmlFor="sexologist">{t("serviceTypes.sexologist")}</Label>
+            <Label htmlFor="sexologist">Sexologist</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="urogynecological" />
-            <Label htmlFor="urogynecological">{t("serviceTypes.urogynecological")}</Label>
+            <Label htmlFor="urogynecological">Urogynecological Therapist</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="patronage" />
-            <Label htmlFor="patronage">{t("serviceTypes.patronage")}</Label>
+            <Label htmlFor="patronage">Patronage Visits</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="birth" />
-            <Label htmlFor="birth">{t("serviceTypes.birth")}</Label>
+            <Label htmlFor="birth">Birth Preparation</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="babywearing" />
-            <Label htmlFor="babywearing">{t("serviceTypes.babywearing")}</Label>
+            <Label htmlFor="babywearing">Babywearing</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="cytology" />
-            <Label htmlFor="cytology">{t("serviceTypes.cytology")}</Label>
+            <Label htmlFor="cytology">Cytology</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="hpv" />
-            <Label htmlFor="hpv">{t("serviceTypes.hpv")}</Label>
+            <Label htmlFor="hpv">HPV Vaccinations</Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="menopause" />
-            <Label htmlFor="menopause">{t("serviceTypes.menopause")}</Label>
+            <Label htmlFor="menopause">Menopause Support</Label>
           </div>
         </div>
       </div>
@@ -87,7 +82,7 @@ export function SearchFilters() {
 
       {/* Service Delivery Format */}
       <div className="space-y-4">
-        <h4 className="font-medium">{t("search.serviceDeliveryFormat")}</h4>
+        <h4 className="font-medium">Service Delivery Format</h4>
         <RadioGroup defaultValue="in-person">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="in-person" id="in-person" />
@@ -111,7 +106,7 @@ export function SearchFilters() {
 
       {/* Rating */}
       <div className="space-y-4">
-        <h4 className="font-medium">{t("search.minimumRating")}</h4>
+        <h4 className="font-medium">Minimum Rating</h4>
         <RadioGroup defaultValue="4.5">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="5" id="r5" />
@@ -134,9 +129,9 @@ export function SearchFilters() {
 
       <div className="flex gap-2 pt-4">
         <Button variant="outline" className="flex-1">
-          {t("common.reset")}
+          Reset
         </Button>
-        <Button className="flex-1">{t("search.applyFilters")}</Button>
+        <Button className="flex-1">Apply Filters</Button>
       </div>
     </div>
   )

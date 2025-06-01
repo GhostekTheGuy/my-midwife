@@ -1,6 +1,3 @@
-"use client"
-
-import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -12,20 +9,18 @@ import { SearchFilters } from "@/components/search-filters"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function SearchPage() {
-  const { t } = useLanguage()
-
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold">{t("search.title")}</h1>
-        <p className="text-muted-foreground">{t("search.description")}</p>
+        <h1 className="text-2xl font-bold">Find a Midwife</h1>
+        <p className="text-muted-foreground">Search for midwives based on location, services, and availability</p>
       </div>
 
       {/* Search Bar */}
       <div className="flex gap-2">
         <div className="relative flex-1">
           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder={t("search.placeholder")} className="pl-9" />
+          <Input placeholder="Search by name, specialty, or location" className="pl-9" />
         </div>
         <Sheet>
           <SheetTrigger asChild>
@@ -43,29 +38,29 @@ export default function SearchPage() {
       <div className="flex flex-wrap gap-2">
         <Badge variant="outline" className="bg-pink-50 flex items-center gap-1">
           <MapPin className="h-3 w-3" />
-          {t("search.warsaw")}
+          Warsaw
           <button className="ml-1 text-muted-foreground hover:text-foreground">×</button>
         </Badge>
         <Badge variant="outline" className="bg-pink-50 flex items-center gap-1">
-          {t("search.lactationConsultant")}
+          Lactation Consultant
           <button className="ml-1 text-muted-foreground hover:text-foreground">×</button>
         </Badge>
         <Badge variant="outline" className="bg-pink-50 flex items-center gap-1">
-          {t("search.inPerson")}
+          In-person
           <button className="ml-1 text-muted-foreground hover:text-foreground">×</button>
         </Badge>
         <Button variant="ghost" size="sm" className="h-6 text-xs">
-          {t("common.clear")} {t("search.all")}
+          Clear All
         </Button>
       </div>
 
       {/* Search Results */}
       <Tabs defaultValue="all">
         <TabsList>
-          <TabsTrigger value="all">{t("search.all")}</TabsTrigger>
-          <TabsTrigger value="lactation">{t("search.lactation")}</TabsTrigger>
-          <TabsTrigger value="birth">{t("search.birthPrep")}</TabsTrigger>
-          <TabsTrigger value="gynecology">{t("search.gynecology")}</TabsTrigger>
+          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger value="lactation">Lactation</TabsTrigger>
+          <TabsTrigger value="birth">Birth Prep</TabsTrigger>
+          <TabsTrigger value="gynecology">Gynecology</TabsTrigger>
         </TabsList>
         <TabsContent value="all" className="mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -76,7 +71,7 @@ export default function SearchPage() {
               rating={4.9}
               reviewCount={124}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with blonde hair smiling"
             />
             <MidwifeCard
               id="2"
@@ -85,7 +80,7 @@ export default function SearchPage() {
               rating={4.7}
               reviewCount={98}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with brown hair smiling"
             />
             <MidwifeCard
               id="3"
@@ -94,7 +89,7 @@ export default function SearchPage() {
               rating={4.8}
               reviewCount={112}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with black hair smiling"
             />
             <MidwifeCard
               id="4"
@@ -103,7 +98,7 @@ export default function SearchPage() {
               rating={4.6}
               reviewCount={87}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with red hair smiling"
             />
             <MidwifeCard
               id="5"
@@ -112,7 +107,7 @@ export default function SearchPage() {
               rating={4.5}
               reviewCount={76}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with short hair smiling"
             />
             <MidwifeCard
               id="6"
@@ -121,7 +116,7 @@ export default function SearchPage() {
               rating={4.8}
               reviewCount={103}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with long hair smiling"
             />
           </div>
         </TabsContent>
@@ -134,7 +129,7 @@ export default function SearchPage() {
               rating={4.9}
               reviewCount={124}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with blonde hair smiling"
             />
             <MidwifeCard
               id="7"
@@ -143,7 +138,7 @@ export default function SearchPage() {
               rating={4.7}
               reviewCount={92}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with curly hair smiling"
             />
           </div>
         </TabsContent>
@@ -156,7 +151,7 @@ export default function SearchPage() {
               rating={4.8}
               reviewCount={112}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with black hair smiling"
             />
           </div>
         </TabsContent>
@@ -169,7 +164,7 @@ export default function SearchPage() {
               rating={4.7}
               reviewCount={98}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with brown hair smiling"
             />
             <MidwifeCard
               id="6"
@@ -178,7 +173,7 @@ export default function SearchPage() {
               rating={4.8}
               reviewCount={103}
               location="Warsaw"
-              imageUrl="/placeholder.svg?height=200&width=200"
+              imageUrl="/placeholder.svg?height=200&width=200&query=female doctor with long hair smiling"
             />
           </div>
         </TabsContent>
@@ -189,10 +184,13 @@ export default function SearchPage() {
         <Card className="bg-pink-50/50">
           <CardContent className="p-6 flex flex-col items-center text-center">
             <SearchIcon className="h-12 w-12 text-pink-300 mb-4" />
-            <h3 className="text-lg font-medium">{t("search.noResults")}</h3>
-            <p className="text-sm text-muted-foreground mt-2 mb-4">{t("search.noResultsDescription")}</p>
+            <h3 className="text-lg font-medium">No Midwives Found</h3>
+            <p className="text-sm text-muted-foreground mt-2 mb-4">
+              We couldn't find any midwives matching your search criteria. Try adjusting your filters or search in a
+              different location.
+            </p>
             <div className="space-y-2">
-              <p className="text-sm font-medium">{t("search.suggestedAlternatives")}:</p>
+              <p className="text-sm font-medium">Suggested alternatives:</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 <Badge className="bg-pink-100 hover:bg-pink-200 text-pink-800">Krakow (5 midwives)</Badge>
                 <Badge className="bg-pink-100 hover:bg-pink-200 text-pink-800">Wroclaw (3 midwives)</Badge>
