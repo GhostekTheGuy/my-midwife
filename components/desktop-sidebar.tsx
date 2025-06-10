@@ -62,11 +62,16 @@ export function DesktopSidebar() {
     <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
       <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
         {/* Logo */}
-        <div className="flex items-center flex-shrink-0 px-4">
-          <div className="relative w-8 h-8 mr-3">
-            <Image src="/placeholder.svg?height=32&width=32" alt="MyMidwife Logo" fill className="object-contain" />
+        <div className="flex justify-center items-center flex-shrink-0 px-10 text-center">
+          <div className="relative w-8 h-8 mr-2">
+            <Image
+              src="https://blobs.vusercontent.net/blob/logo-H5gyLy0Ux3qC6gf7gkJ0jT2QUikOwN.svg"
+              alt="MyMidwife Logo"
+              fill
+              className="object-contain"
+            />
           </div>
-          <h1 className="text-xl font-bold text-pink-600">{t("app.title")}</h1>
+          <h1 className="text-xl font-regular text-pink-600">{t("app.title")}</h1>
         </div>
 
         {/* Navigation */}

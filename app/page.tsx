@@ -18,16 +18,23 @@ export default function Home() {
     <div className="space-y-8">
       {/* Hero Section */}
       <section className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-pink-500 to-pink-600 text-white">
-        <div className="absolute inset-0 opacity-10">
-          <Image src="/placeholder.svg?height=400&width=800" alt="Background pattern" fill className="object-cover" />
+        <div className="absolute inset-0 opacity-30">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1088Z_4.jpg-i7h0BI4SWGJMniFSGSgdLTnibzkccZ.jpeg"
+            alt="Background pattern"
+            fill
+            className="object-cover"
+          />
         </div>
-        <div className="relative p-6 md:p-12 flex flex-col lg:flex-row items-center gap-8">
+        <div className="relative z-10 flex items-center justify-between px-6 py-12">
           <div className="flex-1 space-y-6">
             <Badge className="bg-white/20 hover:bg-white/30 text-white w-fit">{t("app.description")}</Badge>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">{t("home.hero.title")}</h1>
-            <p className="text-white/90 text-lg md:text-xl max-w-2xl">{t("home.hero.description")}</p>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight select-text">
+              {t("home.hero.title")}
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl max-w-2xl select-text">{t("home.hero.description")}</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-white/90">
+              <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-white/90 pointer-events-auto">
                 <Link href="/search">
                   <Search className="mr-2 h-5 w-5" />
                   {t("home.hero.findMidwife")}
@@ -37,7 +44,7 @@ export default function Home() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="bg-transparent border-white text-white hover:bg-white/10"
+                className="bg-transparent border-white text-white hover:bg-white/10 pointer-events-auto"
               >
                 <Link href="/about">{t("home.hero.aboutUs")}</Link>
               </Button>
