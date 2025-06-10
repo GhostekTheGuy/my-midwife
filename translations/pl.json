@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "MyMidwife"
+    "title": "MyMidwife",
+    "description": "Aplikacja dla przyszłych mam"
   },
   "nav": {
     "menu": "Przełącz menu",
@@ -35,7 +36,7 @@
   "home": {
     "hero": {
       "title": "Znajdź idealną położną dla swoich potrzeb",
-      "subtitle": "Połącz się z wykwalifikowanymi położnymi specjalizującymi się w zdrowiu intymnym i okołoporodowym.",
+      "description": "",
       "findMidwife": "Znajdź położną",
       "aboutUs": "O nas"
     },
@@ -47,53 +48,44 @@
     },
     "quickActions": {
       "title": "Szybkie akcje",
-      "findMidwife": {
-        "title": "Znajdź położną",
-        "description": "Szukaj według lokalizacji i usług"
-      },
-      "bookAppointment": {
-        "title": "Umów wizytę",
-        "description": "Zaplanuj wizyty"
-      },
-      "healthDiary": {
-        "title": "Dziennik zdrowia",
-        "description": "Śledź swoje samopoczucie"
-      },
-      "bmiCalculator": {
-        "title": "Kalkulator BMI",
-        "description": "Sprawdź swój wskaźnik masy ciała"
-      },
-      "nutrition": {
-        "title": "Żywienie",
-        "description": "Śledź posiłki i otrzymuj plany"
-      },
-      "chat": {
-        "title": "Czat",
-        "description": "Napisz do swojej położnej"
-      }
+      "findMidwife": "Znajdź położną",
+      "searchDescription": "Szukaj według lokalizacji i usług",
+      "bookVisit": "Umów wizytę",
+      "scheduleDescription": "Zaplanuj wizyty",
+      "healthDiary": "Dziennik zdrowia",
+      "trackDescription": "Śledź swoje samopoczucie",
+      "bmiCalculator": "Kalkulator BMI",
+      "bmiDescription": "Sprawdź swój wskaźnik masy ciała",
+      "nutrition": "Żywienie",
+      "nutritionDescription": "Śledź posiłki i otrzymuj plany",
+      "chat": "Czat",
+      "chatDescription": "Napisz do swojej położnej"
     },
-    "upcomingAppointment": {
-      "title": "Nadchodząca wizyta",
-      "viewAll": "Zobacz wszystkie"
-    },
-    "healthOverview": {
+    "upcomingAppointment": "Nadchodząca wizyta",
+    "viewAll": "Zobacz wszystkie",
+    "featuredMidwives": "Polecane położne",
+    "healthInsights": {
       "title": "Wgląd w zdrowie",
       "bmiStatus": "Status BMI",
-      "nutritionStatus": "Status żywienia",
-      "diaryEntries": "Wpisy w dzienniku"
+      "normalRange": "Zakres normalny",
+      "nextCheckup": "Następna wizyta",
+      "inTwoWeeks": "Za 2 tygodnie",
+      "diaryEntries": "Wpisy w dzienniku",
+      "fiveThisWeek": "5 w tym tygodniu"
+    },
+    "progress": {
+      "title": "Twój postęp",
+      "appointments": "Wizyty",
+      "appointmentsCompleted": "8/10 ukończonych",
+      "diaryEntries": "Wpisy w dzienniku",
+      "entriesCount": "32 wpisów",
+      "healthGoals": "Cele zdrowotne",
+      "goalsProgress": "3/5 osiągniętych"
     },
     "healthTip": {
       "title": "Porada zdrowotna dnia",
       "prenatalNutrition": "Odżywianie w ciąży",
       "description": "Właściwe odżywianie w ciąży jest kluczowe zarówno dla matki, jak i dziecka. Skup się na produktach bogatych w składniki odżywcze, takich jak owoce, warzywa, chude białka i pełnoziarniste produkty. Unikaj surowego mięsa, niepasteryzowanego nabiału i nadmiernej ilości kofeiny. Pij dużo wody przez cały dzień."
-    },
-    "healthInsights": {
-      "title": "Wgląd w zdrowie",
-      "bmiStatus": "Status BMI",
-      "normalRange": "Zakres normalny",
-      "nextCheckup": "Za 2 tygodnie",
-      "diaryEntries": "Wpisy w dzienniku",
-      "fiveThisWeek": "5 w tym tygodniu"
     }
   },
   "notifications": {
@@ -152,6 +144,7 @@
   "common": {
     "back": "Wróć",
     "readMore": "Czytaj więcej",
+    "clear": "Wyczyść",
     "review": {
       "title": "Zostaw recenzję",
       "forAppointmentWith": "za wizytę z",
@@ -201,5 +194,20 @@
     "ctaTitle": "Gotowa, aby rozpocząć swoją podróż?",
     "ctaSubtitle": "Dołącz do tysięcy kobiet, które znalazły swoją idealną położną dzięki MyMidwife. Rozpocznij swoją spersonalizowaną podróż opieki ciążowej już dziś.",
     "signUpToday": "Zarejestruj się już dziś"
+  },
+  "search": {
+    "title": "Znajdź położną",
+    "description": "Wyszukaj wykwalifikowane położne w Twojej okolicy",
+    "placeholder": "Wpisz nazwę, specjalizację lub lokalizację...",
+    "all": "Wszystkie",
+    "lactation": "Laktacja",
+    "birthPrep": "Przygotowanie do porodu",
+    "gynecology": "Ginekologia",
+    "warsaw": "Warszawa",
+    "lactationConsultant": "Konsultant laktacyjny",
+    "inPerson": "Wizyty osobiste",
+    "noResults": "Nie znaleziono położnych",
+    "noResultsDescription": "Spróbuj zmienić kryteria wyszukiwania lub sprawdź inne lokalizacje",
+    "suggestedAlternatives": "Sugerowane alternatywy"
   }
 }
