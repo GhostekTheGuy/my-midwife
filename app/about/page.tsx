@@ -49,7 +49,7 @@ export default function About() {
             </div>
           </div>
           <div className="relative">
-            <div className="relative w-full h-96 rounded-2xl overflow-hidden">
+            <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden">
               <Image src="/images/asia-founder.jpg" alt="Asia - Founder of MyMidwife" fill className="object-cover" />
             </div>
           </div>

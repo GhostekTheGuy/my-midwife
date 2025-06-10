@@ -7,6 +7,7 @@ import { BottomNavigation } from "@/components/bottom-navigation"
 import { DesktopSidebar } from "@/components/desktop-sidebar"
 import { LanguageProvider } from "@/contexts/language-context"
 import { PageTransition } from "@/components/page-transition"
+import { AnimatedGradientBackground } from "@/components/animated-gradient-background"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,7 +29,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <LanguageProvider>
-          <div className="flex min-h-screen">
+          {/* Dodajemy gradient jako tło */}
+          <AnimatedGradientBackground />
+
+          {/* Główna zawartość aplikacji */}
+          <div className="flex min-h-screen relative z-10">
             {/* Desktop Sidebar */}
             <DesktopSidebar />
 
