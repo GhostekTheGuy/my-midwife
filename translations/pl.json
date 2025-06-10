@@ -91,8 +91,7 @@
       "title": "Wgląd w zdrowie",
       "bmiStatus": "Status BMI",
       "normalRange": "Zakres normalny",
-      "nextCheckup": "Następna kontrola",
-      "inTwoWeeks": "Za 2 tygodnie",
+      "nextCheckup": "Za 2 tygodnie",
       "diaryEntries": "Wpisy w dzienniku",
       "fiveThisWeek": "5 w tym tygodniu"
     }
@@ -168,5 +167,39 @@
         "submissionFailed": "Nie udało się wysłać recenzji. Spróbuj ponownie."
       }
     }
+  },
+  "about": {
+    "heroTitle": "O MyMidwife",
+    "heroSubtitle": "Łączymy kobiety z wykwalifikowanymi położnymi dla kompleksowej opieki okołoporodowej",
+    "founderTitle": "Poznaj Asię, naszą założycielkę",
+    "founderParagraph1": "Cześć, jestem Asia i jestem studentką drugiego roku położnictwa na Warszawskim Uniwersytecie Medycznym (WUM). Stworzyłam tę aplikację z wizją zrewolucjonizowania sposobu, w jaki kobiety uzyskują dostęp do opieki położniczej i wsparcia przez całą ciążę.",
+    "founderParagraph2": "Podczas studiów zauważyłam znaczącą lukę między zapotrzebowaniem na spersonalizowaną opiekę położniczą a dostępnością wykwalifikowanych specjalistów. Wiele kobiet ma trudności ze znalezieniem odpowiedniej położnej, która odpowiada ich konkretnym potrzebom, lokalizacji i preferencjom.",
+    "founderParagraph3": "MyMidwife narodziło się z mojej pasji do wypełnienia tej luki. Chciałam stworzyć platformę, na której kobiety mogłyby łatwo łączyć się z certyfikowanymi położnymi, uzyskiwać dostęp do zasobów edukacyjnych, śledzić swoją podróż zdrowotną i otrzymywać spersonalizowaną opiekę, na którą zasługują w jednym z najważniejszych okresów w ich życiu.",
+    "founderParagraph4": "Ta aplikacja reprezentuje moje zaangażowanie w poprawę dostępności opieki zdrowotnej dla matek i wzmocnienie pozycji kobiet za pomocą narzędzi i połączeń, których potrzebują do zdrowej i wspieranej ciąży.",
+    "missionValuesTitle": "Nasza Misja i Wartości",
+    "compassionateCareTitle": "Współczująca Opieka",
+    "compassionateCareDescription": "Zapewnienie empatycznego, spersonalizowanego wsparcia dla każdej kobiety w jej wyjątkowej podróży",
+    "communityTitle": "Społeczność",
+    "communityDescription": "Budowanie połączeń między kobietami a wykwalifikowanymi pracownikami służby zdrowia",
+    "excellenceTitle": "Doskonałość",
+    "excellenceDescription": "Zapewnienie najwyższych standardów opieki położniczej i profesjonalnych usług",
+    "accessibilityTitle": "Dostępność",
+    "accessibilityDescription": "Uczynienie wysokiej jakości opieki położniczej dostępną dla wszystkich kobiet, niezależnie od lokalizacji",
+    "whatOffersTitle": "Co oferuje MyMidwife",
+    "findMidwivesTitle": "Znajdź wykwalifikowane położne",
+    "findMidwivesDescription": "Wyszukuj i łącz się z certyfikowanymi położnymi na podstawie lokalizacji, specjalizacji i dostępności",
+    "healthTrackingTitle": "Śledzenie zdrowia",
+    "healthTrackingDescription": "Monitoruj swoją podróż ciążową za pomocą naszego kompleksowego dziennika zdrowia i kalkulatora BMI",
+    "appointmentManagementTitle": "Zarządzanie wizytami",
+    "appointmentManagementDescription": "Łatwe planowanie i zarządzanie wizytami u wybranej położnej",
+    "nutritionGuidanceTitle": "Wskazówki żywieniowe",
+    "nutritionGuidanceDescription": "Spersonalizowane plany żywieniowe i śledzenie posiłków dla optymalnego zdrowia matki",
+    "directCommunicationTitle": "Bezpośrednia komunikacja",
+    "directCommunicationDescription": "Bezpieczny system wiadomości do utrzymywania kontaktu z położną między wizytami",
+    "educationalResourcesTitle": "Zasoby edukacyjne",
+    "educationalResourcesDescription": "Dostęp do informacji opartych na dowodach i wskazówek dotyczących zdrowej ciąży",
+    "ctaTitle": "Gotowa, aby rozpocząć swoją podróż?",
+    "ctaSubtitle": "Dołącz do tysięcy kobiet, które znalazły swoją idealną położną dzięki MyMidwife. Rozpocznij swoją spersonalizowaną podróż opieki ciążowej już dziś.",
+    "signUpToday": "Zarejestruj się już dziś"
   }
 }

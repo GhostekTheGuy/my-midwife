@@ -382,6 +382,48 @@ const translations = {
           "Navigate the postpartum period with confidence. This guide covers physical recovery, emotional changes, and self-care tips for new mothers.",
       },
     },
+    about: {
+      heroTitle: "About MyMidwife",
+      heroSubtitle: "Connecting women with qualified midwives for comprehensive perinatal care",
+      founderTitle: "Meet Asia, Our Founder",
+      founderParagraph1:
+        "Hey, I'm Asia, and I'm a second-year midwifery student at the Medical University of Warsaw (WUM). I created this app with the vision of revolutionizing how women access midwifery care and support throughout their pregnancy journey.",
+      founderParagraph2:
+        "During my studies, I noticed a significant gap between the demand for personalized midwifery care and the accessibility of qualified professionals. Many women struggle to find the right midwife who matches their specific needs, location, and preferences.",
+      founderParagraph3:
+        "MyMidwife was born from my passion to bridge this gap. I wanted to create a platform where women could easily connect with certified midwives, access educational resources, track their health journey, and receive the personalized care they deserve during one of the most important times in their lives.",
+      founderParagraph4:
+        "This app represents my commitment to improving maternal healthcare accessibility and empowering women with the tools and connections they need for a healthy, supported pregnancy experience.",
+      missionValuesTitle: "Our Mission & Values",
+      compassionateCareTitle: "Compassionate Care",
+      compassionateCareDescription: "Providing empathetic, personalized support for every woman's unique journey",
+      communityTitle: "Community",
+      communityDescription: "Building connections between women and qualified healthcare professionals",
+      excellenceTitle: "Excellence",
+      excellenceDescription: "Ensuring the highest standards of midwifery care and professional service",
+      accessibilityTitle: "Accessibility",
+      accessibilityDescription: "Making quality midwifery care accessible to all women, regardless of location",
+      whatOffersTitle: "What MyMidwife Offers",
+      findMidwivesTitle: "Find Qualified Midwives",
+      findMidwivesDescription:
+        "Search and connect with certified midwives based on location, specialties, and availability",
+      healthTrackingTitle: "Health Tracking",
+      healthTrackingDescription:
+        "Monitor your pregnancy journey with our comprehensive health diary and BMI calculator",
+      appointmentManagementTitle: "Appointment Management",
+      appointmentManagementDescription: "Easy scheduling and management of appointments with your chosen midwife",
+      nutritionGuidanceTitle: "Nutrition Guidance",
+      nutritionGuidanceDescription: "Personalized nutrition plans and meal tracking for optimal maternal health",
+      directCommunicationTitle: "Direct Communication",
+      directCommunicationDescription:
+        "Secure messaging system to stay connected with your midwife between appointments",
+      educationalResourcesTitle: "Educational Resources",
+      educationalResourcesDescription: "Access to evidence-based information and tips for a healthy pregnancy",
+      ctaTitle: "Ready to Start Your Journey?",
+      ctaSubtitle:
+        "Join thousands of women who have found their perfect midwife through MyMidwife. Start your personalized pregnancy care journey today.",
+      signUpToday: "Sign Up Today",
+    },
   },
   pl: {
     app: {
@@ -751,6 +793,51 @@ const translations = {
         description:
           "Przejdź przez okres poporodowy z pewnością siebie. Ten przewodnik obejmuje powrót do zdrowia fizycznego, zmiany emocjonalne i wskazówki dotyczące samoopieki dla nowych matek.",
       },
+    },
+    about: {
+      heroTitle: "O MyMidwife",
+      heroSubtitle: "Łączymy kobiety z wykwalifikowanymi położnymi dla kompleksowej opieki okołoporodowej",
+      founderTitle: "Poznaj Asię, naszą założycielkę",
+      founderParagraph1:
+        "Cześć, jestem Asia i jestem studentką drugiego roku położnictwa na Warszawskim Uniwersytecie Medycznym (WUM). Stworzyłam tę aplikację z wizją zrewolucjonizowania sposobu, w jaki kobiety uzyskują dostęp do opieki położniczej i wsparcia przez całą ciążę.",
+      founderParagraph2:
+        "Podczas studiów zauważyłam znaczącą lukę między zapotrzebowaniem na spersonalizowaną opiekę położniczą a dostępnością wykwalifikowanych specjalistów. Wiele kobiet ma trudności ze znalezieniem odpowiedniej położnej, która odpowiada ich konkretnym potrzebom, lokalizacji i preferencjom.",
+      founderParagraph3:
+        "MyMidwife narodziło się z mojej pasji do wypełnienia tej luki. Chciałam stworzyć platformę, na której kobiety mogłyby łatwo łączyć się z certyfikowanymi położnymi, uzyskiwać dostęp do zasobów edukacyjnych, śledzić swoją podróż zdrowotną i otrzymywać spersonalizowaną opiekę, na którą zasługują w jednym z najważniejszych okresów w ich życiu.",
+      founderParagraph4:
+        "Ta aplikacja reprezentuje moje zaangażowanie w poprawę dostępności opieki zdrowotnej dla matek i wzmocnienie pozycji kobiet za pomocą narzędzi i połączeń, których potrzebują do zdrowej i wspieranej ciąży.",
+      missionValuesTitle: "Nasza Misja i Wartości",
+      compassionateCareTitle: "Współczująca Opieka",
+      compassionateCareDescription:
+        "Zapewnienie empatycznego, spersonalizowanego wsparcia dla każdej kobiety w jej wyjątkowej podróży",
+      communityTitle: "Społeczność",
+      communityDescription: "Budowanie połączeń między kobietami a wykwalifikowanymi pracownikami służby zdrowia",
+      excellenceTitle: "Doskonałość",
+      excellenceDescription: "Zapewnienie najwyższych standardów opieki położniczej i profesjonalnych usług",
+      accessibilityTitle: "Dostępność",
+      accessibilityDescription:
+        "Uczynienie wysokiej jakości opieki położniczej dostępną dla wszystkich kobiet, niezależnie od lokalizacji",
+      whatOffersTitle: "Co oferuje MyMidwife",
+      findMidwivesTitle: "Znajdź wykwalifikowane położne",
+      findMidwivesDescription:
+        "Wyszukuj i łącz się z certyfikowanymi położnymi na podstawie lokalizacji, specjalizacji i dostępności",
+      healthTrackingTitle: "Śledzenie zdrowia",
+      healthTrackingDescription:
+        "Monitoruj swoją podróż ciążową za pomocą naszego kompleksowego dziennika zdrowia i kalkulatora BMI",
+      appointmentManagementTitle: "Zarządzanie wizytami",
+      appointmentManagementDescription: "Łatwe planowanie i zarządzanie wizytami u wybranej położnej",
+      nutritionGuidanceTitle: "Wskazówki żywieniowe",
+      nutritionGuidanceDescription:
+        "Spersonalizowane plany żywieniowe i śledzenie posiłków dla optymalnego zdrowia matki",
+      directCommunicationTitle: "Bezpośrednia komunikacja",
+      directCommunicationDescription: "Bezpieczny system wiadomości do utrzymywania kontaktu z położną między wizytami",
+      educationalResourcesTitle: "Zasoby edukacyjne",
+      educationalResourcesDescription:
+        "Dostęp do informacji opartych na dowodach i wskazówek dotyczących zdrowej ciąży",
+      ctaTitle: "Gotowa, aby rozpocząć swoją podróż?",
+      ctaSubtitle:
+        "Dołącz do tysięcy kobiet, które znalazły swoją idealną położną dzięki MyMidwife. Rozpocznij swoją spersonalizowaną podróż opieki ciążowej już dziś.",
+      signUpToday: "Zarejestruj się już dziś",
     },
   },
 }
