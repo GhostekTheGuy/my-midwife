@@ -116,7 +116,7 @@ export function AnimatedGradientBackground() {
           background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
           top: 0;
           left: 0;
-          opacity: 1; /* Zmieniona przezroczystość na 10% */
+          opacity: 0.3; /* Zmieniona przezroczystość na 10% */
         }
 
         .gradients-container {
@@ -135,7 +135,7 @@ export function AnimatedGradientBackground() {
           left: calc(50% - var(--circle-size) / 2);
           transform-origin: center center;
           animation: moveVertical 30s ease infinite;
-          opacity: 1;
+          opacity: 0.6;
         }
 
         .g2 {
