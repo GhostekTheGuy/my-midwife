@@ -32,7 +32,7 @@ export default function Home() {
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight select-text">
               {t("home.hero.title")}
             </h1>
-            {/* Usunięto opis */}
+            <p className="text-white/90 text-lg md:text-xl max-w-2xl select-text">{t("home.hero.description")}</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-white/90 pointer-events-auto">
                 <Link href="/search">
@@ -55,7 +55,7 @@ export default function Home() {
               src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
               loop
               autoplay
-              className="object-cover rounded-xl w-full h-full"
+              className="object-cover rounded-xl w-full h-full" // Dodaj klasy, aby zachować stylizację obrazu
             />
           </div>
         </div>
