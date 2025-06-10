@@ -6,6 +6,7 @@ import { TopNavigation } from "@/components/top-navigation"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { DesktopSidebar } from "@/components/desktop-sidebar"
 import { LanguageProvider } from "@/contexts/language-context"
+import { PageTransition } from "@/components/page-transition"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -35,7 +36,9 @@ export default function RootLayout({
             <div className="flex-1 flex flex-col md:ml-64">
               <TopNavigation />
               <main className="flex-1 p-4 md:p-6 pb-16 md:pb-6">
-                <div className="max-w-7xl mx-auto">{children}</div>
+                <div className="max-w-7xl mx-auto">
+                  <PageTransition>{children}</PageTransition>
+                </div>
               </main>
 
               {/* Mobile Bottom Navigation */}

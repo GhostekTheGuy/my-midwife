@@ -23,7 +23,7 @@ export function AppointmentList({ type }: AppointmentListProps) {
         id: "1",
         name: "Dr. Anna Kowalska",
         specialty: "Certified Lactation Consultant",
-        avatar: "/placeholder.svg?height=80&width=80&query=female doctor with blonde hair smiling",
+        avatar: "/placeholder.svg?height=80&width=80",
       },
       date: "Tomorrow, May 27",
       time: "10:00 AM",
@@ -37,7 +37,7 @@ export function AppointmentList({ type }: AppointmentListProps) {
         id: "2",
         name: "Maria Nowak",
         specialty: "Urogynecological Therapist",
-        avatar: "/placeholder.svg?height=80&width=80&query=female doctor with brown hair smiling",
+        avatar: "/placeholder.svg?height=80&width=80",
       },
       date: "June 3, 2023",
       time: "2:00 PM",
@@ -54,7 +54,7 @@ export function AppointmentList({ type }: AppointmentListProps) {
         id: "1",
         name: "Dr. Anna Kowalska",
         specialty: "Certified Lactation Consultant",
-        avatar: "/placeholder.svg?height=80&width=80&query=female doctor with blonde hair smiling",
+        avatar: "/placeholder.svg?height=80&width=80",
       },
       date: "May 13, 2023",
       time: "11:30 AM",
@@ -69,7 +69,7 @@ export function AppointmentList({ type }: AppointmentListProps) {
         id: "3",
         name: "Joanna Wiśniewska",
         specialty: "Birth Preparation Specialist",
-        avatar: "/placeholder.svg?height=80&width=80&query=female doctor with black hair smiling",
+        avatar: "/placeholder.svg?height=80&width=80",
       },
       date: "May 5, 2023",
       time: "3:00 PM",
@@ -179,9 +179,11 @@ export function AppointmentList({ type }: AppointmentListProps) {
                   ) : (
                     <>
                       {!appointment.hasReview ? (
-                        <Button size="sm" className="h-8">
-                          <Star className="h-4 w-4 mr-1" />
-                          {t("appointments.review")}
+                        <Button size="sm" className="h-8" asChild>
+                          <Link href={`/appointments/review/${appointment.id}`}>
+                            <Star className="h-4 w-4 mr-1" />
+                            {t("appointments.review")}
+                          </Link>
                         </Button>
                       ) : (
                         <Badge variant="outline" className="bg-green-50 text-green-700">

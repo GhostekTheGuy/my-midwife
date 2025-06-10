@@ -9,6 +9,7 @@ import { Calendar, Calculator, Heart, MessageCircle, Search, Utensils, TrendingU
 import { MidwifeCard } from "@/components/midwife-card"
 import { UpcomingAppointment } from "@/components/upcoming-appointment"
 import { useLanguage } from "@/contexts/language-context"
+import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 
 export default function Home() {
   const { t } = useLanguage()
@@ -43,7 +44,12 @@ export default function Home() {
             </div>
           </div>
           <div className="w-full lg:w-1/2 xl:w-1/3 aspect-square relative max-w-md">
-            <Image src="/placeholder.svg?height=400&width=400" alt="Midwife" fill className="object-cover rounded-xl" />
+            <DotLottieReact
+              src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
+              loop
+              autoplay
+              className="object-cover rounded-xl w-full h-full" // Dodaj klasy, aby zachować stylizację obrazu
+            />
           </div>
         </div>
       </section>
@@ -256,8 +262,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-medium">{t("home.healthTip.prenatalNutrition")}</h4>
                 <p className="text-sm text-muted-foreground">{t("home.healthTip.description")}</p>
-                <Button variant="outline" size="sm" className="w-full">
-                  {t("home.healthTip.readMore")}
+                <Button variant="outline" size="sm" className="w-full" asChild>
+                  <Link href="/health-tips">{t("common.readMore")}</Link>
                 </Button>
               </div>
             </CardContent>

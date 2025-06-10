@@ -70,6 +70,22 @@ const translations = {
       clear: "Clear",
       apply: "Apply",
       reset: "Reset",
+      readMore: "Read more", // Corrected path
+      review: {
+        title: "Leave a Review",
+        forAppointmentWith: "for appointment with",
+        rating: "Your Rating",
+        comment: "Your Comment",
+        commentPlaceholder: "Share your experience...",
+        submitReview: "Submit Review",
+        toast: {
+          error: "Error",
+          selectRating: "Please select a rating.",
+          success: "Success!",
+          reviewSubmitted: "Review submitted successfully!",
+          submissionFailed: "Failed to submit review. Please try again.",
+        },
+      },
     },
     appointments: {
       title: "Appointments",
@@ -338,6 +354,34 @@ const translations = {
         readMore: "Read More",
       },
     },
+    healthTips: {
+      title: "Health Tips",
+      prenatalNutrition: {
+        title: "Prenatal Nutrition: Eating for Two",
+        description:
+          "Discover essential nutrients and dietary guidelines for a healthy pregnancy. Learn what to eat and what to avoid to support both your well-being and your baby's development.",
+      },
+      exerciseDuringPregnancy: {
+        title: "Safe Exercise During Pregnancy",
+        description:
+          "Understand the benefits of staying active during pregnancy and learn about safe exercises. From gentle yoga to brisk walking, find routines that suit your stage of pregnancy.",
+      },
+      managingMorningSickness: {
+        title: "Managing Morning Sickness",
+        description:
+          "Tips and strategies to alleviate morning sickness. Explore dietary changes, lifestyle adjustments, and natural remedies to help you feel better during early pregnancy.",
+      },
+      preparingForLabor: {
+        title: "Preparing for Labor and Delivery",
+        description:
+          "A comprehensive guide to preparing for childbirth. Learn about labor stages, pain management options, and what to pack for the hospital to ensure a smooth delivery.",
+      },
+      postpartumRecovery: {
+        title: "Postpartum Recovery: What to Expect",
+        description:
+          "Navigate the postpartum period with confidence. This guide covers physical recovery, emotional changes, and self-care tips for new mothers.",
+      },
+    },
   },
   pl: {
     app: {
@@ -395,6 +439,22 @@ const translations = {
       clear: "Wyczyść",
       apply: "Zastosuj",
       reset: "Resetuj",
+      readMore: "Czytaj więcej", // Corrected path
+      review: {
+        title: "Zostaw recenzję",
+        forAppointmentWith: "za wizytę z",
+        rating: "Twoja ocena",
+        comment: "Twój komentarz",
+        commentPlaceholder: "Podziel się swoim doświadczeniem...",
+        submitReview: "Wyślij recenzję",
+        toast: {
+          error: "Błąd",
+          selectRating: "Proszę wybrać ocenę.",
+          success: "Sukces!",
+          reviewSubmitted: "Recenzja została pomyślnie wysłana!",
+          submissionFailed: "Nie udało się wysłać recenzji. Spróbuj ponownie.",
+        },
+      },
     },
     appointments: {
       title: "Wizyty",
@@ -659,10 +719,37 @@ const translations = {
       },
       healthTip: {
         title: "Dzisiejsza porada zdrowotna",
-        prenatalNutrition: "Żywienie prenatalne",
+        prenatalNutrition: "Odżywianie w ciąży",
         description:
-          "Upewnij się, że dostarczasz wystarczająco kwasu foliowego, żelaza i wapnia podczas ciąży dla optymalnego zdrowia.",
-        readMore: "Czytaj więcej",
+          "Właściwe odżywianie w ciąży jest kluczowe zarówno dla matki, jak i dziecka. Skup się na produktach bogatych w składniki odżywcze, takich jak owoce, warzywa, chude białka i pełnoziarniste produkty. Unikaj surowego mięsa, niepasteryzowanego nabiału i nadmiernej ilości kofeiny. Pij dużo wody przez cały dzień.",
+      },
+    },
+    healthTips: {
+      title: "Porady Zdrowotne",
+      prenatalNutrition: {
+        title: "Odżywianie w ciąży: Jedzenie dla dwojga",
+        description:
+          "Odkryj niezbędne składniki odżywcze i wytyczne dietetyczne dla zdrowej ciąży. Dowiedz się, co jeść, a czego unikać, aby wspierać zarówno swoje samopoczucie, jak i rozwój dziecka.",
+      },
+      exerciseDuringPregnancy: {
+        title: "Bezpieczne ćwiczenia w ciąży",
+        description:
+          "Poznaj korzyści z aktywności fizycznej w ciąży i dowiedz się o bezpiecznych ćwiczeniach. Od delikatnej jogi po szybki spacer, znajdź rutyny odpowiednie dla Twojego etapu ciąży.",
+      },
+      managingMorningSickness: {
+        title: "Radzenie sobie z porannymi mdłościami",
+        description:
+          "Wskazówki i strategie łagodzenia porannych mdłości. Poznaj zmiany w diecie, modyfikacje stylu życia i naturalne środki, które pomogą Ci poczuć się lepiej we wczesnej ciąży.",
+      },
+      preparingForLabor: {
+        title: "Przygotowanie do porodu",
+        description:
+          "Kompleksowy przewodnik po przygotowaniach do porodu. Dowiedz się o etapach porodu, opcjach zarządzania bólem i co spakować do szpitala, aby zapewnić płynny poród.",
+      },
+      postpartumRecovery: {
+        title: "Powrót do formy po porodzie: Czego się spodziewać",
+        description:
+          "Przejdź przez okres poporodowy z pewnością siebie. Ten przewodnik obejmuje powrót do zdrowia fizycznego, zmiany emocjonalne i wskazówki dotyczące samoopieki dla nowych matek.",
       },
     },
   },

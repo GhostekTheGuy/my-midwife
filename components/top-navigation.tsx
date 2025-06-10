@@ -63,7 +63,7 @@ export function TopNavigation() {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex md:items-center md:gap-2">
-          <Button variant="outline" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild className="btn-animate">
             <Link href="/search">
               <Plus className="h-4 w-4 mr-2" />
               {t("appointments.book")}
@@ -72,7 +72,7 @@ export function TopNavigation() {
 
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative smooth-transition">
                 <Bell className="h-5 w-5" />
                 <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
                   3
@@ -127,7 +127,7 @@ export function TopNavigation() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full smooth-transition">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/images/user-avatar.png" alt={userData.name} />
                   <AvatarFallback>{userData.initials}</AvatarFallback>

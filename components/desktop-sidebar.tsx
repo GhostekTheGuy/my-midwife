@@ -64,12 +64,7 @@ export function DesktopSidebar() {
         {/* Logo */}
         <div className="flex items-center flex-shrink-0 px-4">
           <div className="relative w-8 h-8 mr-3">
-            <Image
-              src="/placeholder.svg?height=32&width=32&query=pink heart with stethoscope logo"
-              alt="MyMidwife Logo"
-              fill
-              className="object-contain"
-            />
+            <Image src="/placeholder.svg?height=32&width=32" alt="MyMidwife Logo" fill className="object-contain" />
           </div>
           <h1 className="text-xl font-bold text-pink-600">{t("app.title")}</h1>
         </div>
@@ -84,14 +79,14 @@ export function DesktopSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md nav-item smooth-transition ${
                   active
                     ? "bg-pink-100 text-pink-900 border-r-2 border-pink-500"
                     : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
                 <Icon
-                  className={`mr-3 flex-shrink-0 h-5 w-5 ${
+                  className={`mr-3 flex-shrink-0 h-5 w-5 smooth-transition ${
                     active ? "text-pink-500" : "text-gray-400 group-hover:text-gray-500"
                   }`}
                 />

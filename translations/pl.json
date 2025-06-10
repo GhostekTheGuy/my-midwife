@@ -31,5 +31,142 @@
     "midwife_profile": "Profil położnej",
     "start_chat_with_midwife": "Rozpocznij rozmowę z położną",
     "consult_with_midwife": "skonsultuj się z położną"
+  },
+  "home": {
+    "hero": {
+      "title": "Znajdź idealną położną dla swoich potrzeb",
+      "subtitle": "Połącz się z wykwalifikowanymi położnymi specjalizującymi się w zdrowiu intymnym i okołoporodowym.",
+      "findMidwife": "Znajdź położną",
+      "aboutUs": "O nas"
+    },
+    "stats": {
+      "certifiedMidwives": "Certyfikowane położne",
+      "satisfiedPatients": "Zadowolone pacjentki",
+      "supportAvailable": "Wsparcie dostępne",
+      "satisfactionRate": "Wskaźnik zadowolenia"
+    },
+    "quickActions": {
+      "title": "Szybkie akcje",
+      "findMidwife": {
+        "title": "Znajdź położną",
+        "description": "Szukaj według lokalizacji i usług"
+      },
+      "bookAppointment": {
+        "title": "Umów wizytę",
+        "description": "Zaplanuj wizyty"
+      },
+      "healthDiary": {
+        "title": "Dziennik zdrowia",
+        "description": "Śledź swoje samopoczucie"
+      },
+      "bmiCalculator": {
+        "title": "Kalkulator BMI",
+        "description": "Sprawdź swój wskaźnik masy ciała"
+      },
+      "nutrition": {
+        "title": "Żywienie",
+        "description": "Śledź posiłki i otrzymuj plany"
+      },
+      "chat": {
+        "title": "Czat",
+        "description": "Napisz do swojej położnej"
+      }
+    },
+    "upcomingAppointment": {
+      "title": "Nadchodząca wizyta",
+      "viewAll": "Zobacz wszystkie"
+    },
+    "healthOverview": {
+      "title": "Wgląd w zdrowie",
+      "bmiStatus": "Status BMI",
+      "nutritionStatus": "Status żywienia",
+      "diaryEntries": "Wpisy w dzienniku"
+    },
+    "healthTip": {
+      "title": "Porada zdrowotna dnia",
+      "prenatalNutrition": "Odżywianie w ciąży",
+      "description": "Właściwe odżywianie w ciąży jest kluczowe zarówno dla matki, jak i dziecka. Skup się na produktach bogatych w składniki odżywcze, takich jak owoce, warzywa, chude białka i pełnoziarniste produkty. Unikaj surowego mięsa, niepasteryzowanego nabiału i nadmiernej ilości kofeiny. Pij dużo wody przez cały dzień."
+    },
+    "healthInsights": {
+      "title": "Wgląd w zdrowie",
+      "bmiStatus": "Status BMI",
+      "normalRange": "Zakres normalny",
+      "nextCheckup": "Następna kontrola",
+      "inTwoWeeks": "Za 2 tygodnie",
+      "diaryEntries": "Wpisy w dzienniku",
+      "fiveThisWeek": "5 w tym tygodniu"
+    }
+  },
+  "notifications": {
+    "title": "Powiadomienia",
+    "markAllRead": "Oznacz wszystkie jako przeczytane",
+    "viewAll": "Zobacz wszystkie powiadomienia",
+    "newAppointment": "Nowa wizyta umówiona z {midwifeName} dnia {date} o {time}.",
+    "messageFromMidwife": "Nowa wiadomość od {midwifeName}: \"{message}\"",
+    "appointmentReminder": "Przypomnienie: Twoja wizyta z {midwifeName} jest jutro o {time}.",
+    "healthTip": "Dostępna nowa porada zdrowotna: {tipTitle}.",
+    "noNotifications": "Brak nowych powiadomień."
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "language": {
+      "title": "Język",
+      "description": "Zmień język aplikacji."
+    },
+    "notifications": {
+      "title": "Powiadomienia",
+      "description": "Zarządzaj preferencjami powiadomień.",
+      "email": "Powiadomienia e-mail",
+      "sms": "Powiadomienia SMS",
+      "push": "Powiadomienia push"
+    },
+    "privacy": {
+      "title": "Prywatność",
+      "description": "Zarządzaj ustawieniami prywatności.",
+      "dataSharing": "Zezwól na udostępnianie danych",
+      "personalization": "Włącz spersonalizowane treści"
+    }
+  },
+  "healthTips": {
+    "title": "Porady Zdrowotne",
+    "prenatalNutrition": {
+      "title": "Odżywianie w ciąży: Jedzenie dla dwojga",
+      "description": "Odkryj niezbędne składniki odżywcze i wytyczne dietetyczne dla zdrowej ciąży. Dowiedz się, co jeść, a czego unikać, aby wspierać zarówno swoje samopoczucie, jak i rozwój dziecka."
+    },
+    "exerciseDuringPregnancy": {
+      "title": "Bezpieczne ćwiczenia w ciąży",
+      "description": "Poznaj korzyści z aktywności fizycznej w ciąży i dowiedz się o bezpiecznych ćwiczeniach. Od delikatnej jogi po szybki spacer, znajdź rutyny odpowiednie dla Twojego etapu ciąży."
+    },
+    "managingMorningSickness": {
+      "title": "Radzenie sobie z porannymi mdłościami",
+      "description": "Wskazówki i strategie łagodzenia porannych mdłości. Poznaj zmiany w diecie, modyfikacje stylu życia i naturalne środki, które pomogą Ci poczuć się lepiej we wczesnej ciąży."
+    },
+    "preparingForLabor": {
+      "title": "Przygotowanie do porodu",
+      "description": "Kompleksowy przewodnik po przygotowaniach do porodu. Dowiedz się o etapach porodu, opcjach zarządzania bólem i co spakować do szpitala, aby zapewnić płynny poród."
+    },
+    "postpartumRecovery": {
+      "title": "Powrót do formy po porodzie: Czego się spodziewać",
+      "description": "Przejdź przez okres poporodowy z pewnością siebie. Ten przewodnik obejmuje powrót do zdrowia fizycznego, zmiany emocjonalne i wskazówki dotyczące samoopieki dla nowych matek."
+    }
+  },
+  "common": {
+    "back": "Wróć",
+    "readMore": "Czytaj więcej",
+    "review": {
+      "title": "Zostaw recenzję",
+      "forAppointmentWith": "za wizytę z",
+      "rating": "Twoja ocena",
+      "comment": "Twój komentarz",
+      "commentPlaceholder": "Podziel się swoim doświadczeniem...",
+      "submitReview": "Wyślij recenzję",
+      "toast": {
+        "error": "Błąd",
+        "selectRating": "Proszę wybrać ocenę.",
+        "success": "Sukces!",
+        "reviewSubmitted": "Recenzja została pomyślnie wysłana!",
+        "submissionFailed": "Nie udało się wysłać recenzji. Spróbuj ponownie."
+      }
+    }
   }
 }

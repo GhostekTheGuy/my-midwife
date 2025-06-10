@@ -22,5 +22,152 @@
   "language": {
     "english": "English",
     "polish": "Polish"
+  },
+  "midwife": {
+    "find_midwives": "Find Midwives",
+    "search_midwives": "Search midwives...",
+    "no_midwives_found": "No midwives found",
+    "find_midwife": "Find a Midwife",
+    "midwife_profile": "Midwife Profile",
+    "start_chat_with_midwife": "Start chat with midwife",
+    "consult_with_midwife": "consult with midwife"
+  },
+  "home": {
+    "hero": {
+      "title": "Find the ideal midwife for your needs",
+      "subtitle": "Connect with qualified midwives specializing in intimate and perinatal health.",
+      "findMidwife": "Find a midwife",
+      "aboutUs": "About Us"
+    },
+    "stats": {
+      "certifiedMidwives": "Certified Midwives",
+      "satisfiedPatients": "Satisfied Patients",
+      "supportAvailable": "Support Available",
+      "satisfactionRate": "Satisfaction Rate"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "findMidwife": {
+        "title": "Find a midwife",
+        "description": "Search by location and services"
+      },
+      "bookAppointment": {
+        "title": "Book an appointment",
+        "description": "Plan your visits"
+      },
+      "healthDiary": {
+        "title": "Health Diary",
+        "description": "Track your well-being"
+      },
+      "bmiCalculator": {
+        "title": "BMI Calculator",
+        "description": "Check your body mass index"
+      },
+      "nutrition": {
+        "title": "Nutrition",
+        "description": "Track meals and get plans"
+      },
+      "chat": {
+        "title": "Chat",
+        "description": "Message your midwife"
+      }
+    },
+    "upcomingAppointment": {
+      "title": "Upcoming Appointment",
+      "viewAll": "View all"
+    },
+    "healthOverview": {
+      "title": "Health Overview",
+      "bmiStatus": "BMI Status",
+      "nutritionStatus": "Nutrition Status",
+      "diaryEntries": "Diary Entries"
+    },
+    "healthTip": {
+      "title": "Health Tip of the Day",
+      "prenatalNutrition": "Prenatal Nutrition",
+      "description": "Proper nutrition during pregnancy is crucial for both mother and baby. Focus on nutrient-dense foods like fruits, vegetables, lean proteins, and whole grains. Avoid raw meats, unpasteurized dairy, and excessive caffeine. Stay hydrated by drinking plenty of water throughout the day.",
+      "readMore": "Read more"
+    },
+    "healthInsights": {
+      "title": "Health Insights",
+      "bmiStatus": "BMI Status",
+      "normalRange": "Normal Range",
+      "nextCheckup": "Next Checkup",
+      "inTwoWeeks": "In 2 weeks",
+      "diaryEntries": "Diary Entries",
+      "fiveThisWeek": "5 this week"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "viewAll": "View all notifications",
+    "newAppointment": "New appointment booked with {midwifeName} on {date} at {time}.",
+    "messageFromMidwife": "New message from {midwifeName}: \"{message}\"",
+    "appointmentReminder": "Reminder: Your appointment with {midwifeName} is tomorrow at {time}.",
+    "healthTip": "New health tip available: {tipTitle}.",
+    "noNotifications": "No new notifications."
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "title": "Language",
+      "description": "Change the application language."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Manage your notification preferences.",
+      "email": "Email notifications",
+      "sms": "SMS notifications",
+      "push": "Push notifications"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "description": "Manage your privacy settings.",
+      "dataSharing": "Allow data sharing",
+      "personalization": "Enable personalized content"
+    }
+  },
+  "healthTips": {
+    "title": "Health Tips",
+    "prenatalNutrition": {
+      "title": "Prenatal Nutrition: Eating for Two",
+      "description": "Discover essential nutrients and dietary guidelines for a healthy pregnancy. Learn what to eat and what to avoid to support both your well-being and your baby's development."
+    },
+    "exerciseDuringPregnancy": {
+      "title": "Safe Exercise During Pregnancy",
+      "description": "Understand the benefits of staying active during pregnancy and learn about safe exercises. From gentle yoga to brisk walking, find routines that suit your stage of pregnancy."
+    },
+    "managingMorningSickness": {
+      "title": "Managing Morning Sickness",
+      "description": "Tips and strategies to alleviate morning sickness. Explore dietary changes, lifestyle adjustments, and natural remedies to help you feel better during early pregnancy."
+    },
+    "preparingForLabor": {
+      "title": "Preparing for Labor and Delivery",
+      "description": "A comprehensive guide to preparing for childbirth. Learn about labor stages, pain management options, and what to pack for the hospital to ensure a smooth delivery."
+    },
+    "postpartumRecovery": {
+      "title": "Postpartum Recovery: What to Expect",
+      "description": "Navigate the postpartum period with confidence. This guide covers physical recovery, emotional changes, and self-care tips for new mothers."
+    }
+  },
+  "common": {
+    "back": "Back",
+    "readMore": "Read more",
+    "review": {
+      "title": "Leave a Review",
+      "forAppointmentWith": "for appointment with",
+      "rating": "Your Rating",
+      "comment": "Your Comment",
+      "commentPlaceholder": "Share your experience...",
+      "submitReview": "Submit Review",
+      "toast": {
+        "error": "Error",
+        "selectRating": "Please select a rating.",
+        "success": "Success!",
+        "reviewSubmitted": "Review submitted successfully!",
+        "submissionFailed": "Failed to submit review. Please try again."
+      }
+    }
   }
 }
