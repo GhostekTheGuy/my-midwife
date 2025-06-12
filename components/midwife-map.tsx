@@ -35,6 +35,7 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState<{ x: number; y: number; centerX: number; centerY: number } | null>(null)
   const mapRef = useRef<HTMLDivElement>(null)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Calculate bounds and center from midwives
   useEffect(() => {
@@ -72,20 +73,20 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
     const mapWidth = 800
     const mapHeight = 600
 
-    // Simple mercator projection approximation
+    // Web Mercator projection
     const scale = Math.pow(2, zoom)
-    const worldSize = 256 * scale
+    
+    // Convert longitude to x
+    const x = ((coord[0] + 180) / 360) * scale * 256
+    
+    // Convert latitude to y using Web Mercator formula
+    const latRad = (coord[1] * Math.PI) / 180
+    const y = ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * scale * 256
 
-    const x = ((coord[0] + 180) / 360) * worldSize
-    const y =
-      ((1 - Math.log(Math.tan((coord[1] * Math.PI) / 180) + 1 / Math.cos((coord[1] * Math.PI) / 180)) / Math.PI) / 2) *
-      worldSize
-
-    const centerX = ((center[0] + 180) / 360) * worldSize
-    const centerY =
-      ((1 - Math.log(Math.tan((center[1] * Math.PI) / 180) + 1 / Math.cos((center[1] * Math.PI) / 180)) / Math.PI) /
-        2) *
-      worldSize
+    // Convert center coordinates
+    const centerX = ((center[0] + 180) / 360) * scale * 256
+    const centerLatRad = (center[1] * Math.PI) / 180
+    const centerY = ((1 - Math.log(Math.tan(centerLatRad) + 1 / Math.cos(centerLatRad)) / Math.PI) / 2) * scale * 256
 
     return {
       x: x - centerX + mapWidth / 2,
@@ -153,16 +154,24 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
       
       // Convert pixel movement to coordinate movement
       const scale = Math.pow(2, zoom)
-      const worldSize = 256 * scale
       const mapWidth = 800
       const mapHeight = 600
       
+      // Calculate movement in degrees
       const deltaLng = -(deltaX / mapWidth) * (360 / scale)
-      const deltaLat = (deltaY / mapHeight) * (180 / scale)
+      
+      // For latitude, we need to account for the Mercator projection
+      const currentLatRad = (dragStart.centerY * Math.PI) / 180
+      const deltaLatRad = (deltaY / mapHeight) * (2 * Math.PI / scale)
+      const newLatRad = currentLatRad + deltaLatRad
+      const newLat = (newLatRad * 180) / Math.PI
+      
+      // Clamp latitude to valid range
+      const clampedLat = Math.max(-85, Math.min(85, newLat))
       
       setCenter([
         dragStart.centerX + deltaLng,
-        dragStart.centerY + deltaLat
+        clampedLat
       ])
     }
   }
@@ -177,6 +186,23 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
   const handleMouseLeave = () => {
     setIsDragging(false)
     setDragStart(null)
+  }
+
+  // Handle marker hover with debouncing
+  const handleMarkerHover = (midwifeId: string) => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    setHoveredMidwife(midwifeId)
+  }
+
+  const handleMarkerLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredMidwife(null)
+    }, 100) // Small delay to prevent flickering
   }
 
   // Generate map tiles for display
@@ -282,77 +308,84 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
                 return (
                   <div key={midwife.id}>
                     {/* Marker */}
-                    <button
+                    <div
                       className={`absolute transform -translate-x-1/2 -translate-y-full transition-all duration-200 hover:scale-110 pointer-events-auto ${
                         selectedMidwife === midwife.id ? "scale-110 z-20" : "z-10"
                       }`}
                       style={{
-                        left: `${(pixelPos.x / 800) * 100}%`,
-                        top: `${(pixelPos.y / 600) * 100}%`,
+                        left: pixelPos.x,
+                        top: pixelPos.y,
                       }}
-                      onClick={() => handleMarkerClick(midwife.id)}
-                      onMouseEnter={() => setHoveredMidwife(midwife.id)}
-                      onMouseLeave={() => setHoveredMidwife(null)}
+                      onMouseEnter={() => handleMarkerHover(midwife.id)}
+                      onMouseLeave={handleMarkerLeave}
                     >
-                      <div className="relative">
+                      <button
+                        onClick={() => handleMarkerClick(midwife.id)}
+                        className="relative"
+                      >
                         <div className="w-8 h-8 bg-pink-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-xs font-bold">
                           {index + 1}
                         </div>
                         <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-pink-500"></div>
-                      </div>
-                    </button>
+                      </button>
 
-                    {/* Hover Tooltip */}
-                    {hoveredMidwife === midwife.id && (
-                      <div
-                        className="absolute z-40 bg-white rounded-lg shadow-xl border transform -translate-x-1/2 -translate-y-full mb-4 min-w-[280px] pointer-events-auto"
-                        style={{
-                          left: `${(pixelPos.x / 800) * 100}%`,
-                          top: `${(pixelPos.y / 600) * 100}%`,
-                        }}
-                      >
-                        <div className="p-4 space-y-3">
-                          <div className="flex items-start gap-3">
-                            <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                              <Image
-                                src={midwife.imageUrl || "/placeholder.svg"}
-                                alt={midwife.name}
-                                fill
-                                className="object-cover"
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-sm truncate">{midwife.name}</h3>
-                              <p className="text-xs text-gray-600 truncate">{midwife.specialty}</p>
-                              <div className="flex items-center mt-1">
-                                <span className="text-yellow-500 text-sm">★</span>
-                                <span className="text-xs ml-1">{midwife.rating}</span>
-                                <span className="text-xs text-gray-500 ml-1">({midwife.reviewCount})</span>
+                      {/* Hover Tooltip */}
+                      {hoveredMidwife === midwife.id && (
+                        <div
+                          className="absolute z-40 bg-white rounded-lg shadow-xl border transform -translate-x-1/2 -translate-y-full mb-4 min-w-[280px] pointer-events-auto"
+                          style={{
+                            bottom: '100%',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            marginBottom: '8px'
+                          }}
+                          onMouseEnter={() => handleMarkerHover(midwife.id)}
+                          onMouseLeave={handleMarkerLeave}
+                        >
+                          <div className="p-4 space-y-3">
+                            <div className="flex items-start gap-3">
+                              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                                <Image
+                                  src={midwife.imageUrl || "/placeholder.svg"}
+                                  alt={midwife.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-semibold text-sm truncate">{midwife.name}</h3>
+                                <p className="text-xs text-gray-600 truncate">{midwife.specialty}</p>
+                                <div className="flex items-center mt-1">
+                                  <span className="text-yellow-500 text-sm">★</span>
+                                  <span className="text-xs ml-1">{midwife.rating}</span>
+                                  <span className="text-xs text-gray-500 ml-1">({midwife.reviewCount})</span>
+                                </div>
                               </div>
                             </div>
+                            <div className="text-xs text-gray-500 truncate">
+                              📍 {midwife.location}
+                            </div>
+                            <Button 
+                              size="sm" 
+                              className="w-full text-xs h-8"
+                              onClick={() => handleMarkerClick(midwife.id)}
+                            >
+                              {t("language") === "pl" ? "Sprawdź usługi" : "Check Services"}
+                            </Button>
                           </div>
-                          <div className="text-xs text-gray-500 truncate">
-                            📍 {midwife.location}
-                          </div>
-                          <Button 
-                            size="sm" 
-                            className="w-full text-xs h-8"
-                            onClick={() => handleMarkerClick(midwife.id)}
-                          >
-                            {t("language") === "pl" ? "Sprawdź usługi" : "Check Services"}
-                          </Button>
+                          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
                         </div>
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
-                      </div>
-                    )}
+                      )}
+                    </div>
 
                     {/* Click Popup */}
                     {selectedMidwife === midwife.id && (
                       <div
                         className="absolute z-30 bg-white rounded-lg shadow-lg p-3 border transform -translate-x-1/2 -translate-y-full mb-2 min-w-[200px] pointer-events-auto"
                         style={{
-                          left: `${(pixelPos.x / 800) * 100}%`,
-                          top: `${(pixelPos.y / 600) * 100}%`,
+                          left: pixelPos.x,
+                          top: pixelPos.y,
+                          transform: 'translate(-50%, calc(-100% - 8px))'
                         }}
                       >
                         <div className="space-y-1">
