@@ -144,7 +144,15 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
   }
 
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return
+    if (!mapRef.current) return
+
+    // Clean up existing map instance if it exists
+    if (mapInstanceRef.current) {
+      markersRef.current.forEach((marker) => marker.remove())
+      markersRef.current = []
+      mapInstanceRef.current.remove()
+      mapInstanceRef.current = null
+    }
 
     try {
       setIsLoading(true)
@@ -176,7 +184,7 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
       })
 
       // Create a MapTiler Layer inside Leaflet using the correct API
-      const mtLayer = new (L as any).maptiler.maptilerLayer({
+      const mtLayer = new (L as any).maptiler.tileLayer({
         apiKey: "cM7IF9RAJLNUuMNpfjtq",
       }).addTo(map)
 
