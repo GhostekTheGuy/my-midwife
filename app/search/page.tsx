@@ -6,21 +6,12 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, SearchIcon, SlidersHorizontal, List, MapIcon } from "lucide-react"
+import { MapPin, SearchIcon, SlidersHorizontal } from "lucide-react"
 import { MidwifeCard } from "@/components/midwife-card"
 import { SearchFilters } from "@/components/search-filters"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useState, useMemo } from "react"
-import { MidwifeMap } from "@/components/midwife-map"
 import { useRouter } from "next/navigation"
-
-// City coordinates for the map
-const CITY_COORDINATES: { [key: string]: [number, number] } = {
-  Warsaw: [21.0122, 52.2297],
-  Krakow: [19.945, 50.0647],
-  Wroclaw: [17.0385, 51.1079],
-  Poznan: [16.9252, 52.4064],
-}
 
 export default function SearchPage() {
   const { t } = useLanguage()
@@ -32,7 +23,6 @@ export default function SearchPage() {
   const [selectedFormat, setSelectedFormat] = useState("in-person")
   const [selectedRating, setSelectedRating] = useState("4.5")
   const [activeFilters, setActiveFilters] = useState<string[]>(["Warsaw", "Lactation Consultant", "In-person"])
-  const [viewMode, setViewMode] = useState<"list" | "map">("list")
 
   const allMidwives = [
     {
@@ -279,10 +269,6 @@ export default function SearchPage() {
     }
   }
 
-  const handleMarkerClick = (midwifeId: string) => {
-    router.push(`/midwife/${midwifeId}`)
-  }
-
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -301,50 +287,28 @@ export default function SearchPage() {
             onChange={(e) => handleSearchChange(e.target.value)}
           />
         </div>
-        <div className="flex gap-2">
-          <div className="border rounded-md overflow-hidden flex">
-            <Button
-              variant={viewMode === "list" ? "default" : "ghost"}
-              size="sm"
-              className="rounded-none border-0"
-              onClick={() => setViewMode("list")}
-            >
-              <List className="h-4 w-4 mr-1" />
-              {t("search.list")}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon">
+              <SlidersHorizontal className="h-4 w-4" />
             </Button>
-            <Button
-              variant={viewMode === "map" ? "default" : "ghost"}
-              size="sm"
-              className="rounded-none border-0"
-              onClick={() => setViewMode("map")}
-            >
-              <MapIcon className="h-4 w-4 mr-1" />
-              {t("search.map")}
-            </Button>
-          </div>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <SlidersHorizontal className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <SearchFilters
-                selectedCity={selectedCity}
-                setSelectedCity={setSelectedCity}
-                selectedServices={selectedServices}
-                setSelectedServices={setSelectedServices}
-                selectedFormat={selectedFormat}
-                setSelectedFormat={setSelectedFormat}
-                selectedRating={selectedRating}
-                setSelectedRating={setSelectedRating}
-                activeFilters={activeFilters}
-                setActiveFilters={setActiveFilters}
-                onReset={handleClearFilters}
-              />
-            </SheetContent>
-          </Sheet>
-        </div>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SearchFilters
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
+              selectedServices={selectedServices}
+              setSelectedServices={setSelectedServices}
+              selectedFormat={selectedFormat}
+              setSelectedFormat={setSelectedFormat}
+              selectedRating={selectedRating}
+              setSelectedRating={setSelectedRating}
+              activeFilters={activeFilters}
+              setActiveFilters={setActiveFilters}
+              onReset={handleClearFilters}
+            />
+          </SheetContent>
+        </Sheet>
       </div>
 
       {/* Active Filters */}
@@ -367,25 +331,85 @@ export default function SearchPage() {
         )}
       </div>
 
-      {/* Map View */}
-      {viewMode === "map" && (
-        <div className="h-[600px] w-full">
-          <MidwifeMap midwives={filteredMidwives} onMarkerClick={handleMarkerClick} className="h-full" />
-        </div>
-      )}
-
-      {/* List View */}
-      {viewMode === "list" && (
-        <Tabs defaultValue="all">
-          <TabsList>
-            <TabsTrigger value="all">{t("search.all")}</TabsTrigger>
-            <TabsTrigger value="lactation">{t("search.lactation")}</TabsTrigger>
-            <TabsTrigger value="birth">{t("search.birthPrep")}</TabsTrigger>
-            <TabsTrigger value="gynecology">{t("search.gynecology")}</TabsTrigger>
-          </TabsList>
-          <TabsContent value="all" className="mt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMidwives.map((midwife) => (
+      {/* Results */}
+      <Tabs defaultValue="all">
+        <TabsList>
+          <TabsTrigger value="all">{t("search.all")}</TabsTrigger>
+          <TabsTrigger value="lactation">{t("search.lactation")}</TabsTrigger>
+          <TabsTrigger value="birth">{t("search.birthPrep")}</TabsTrigger>
+          <TabsTrigger value="gynecology">{t("search.gynecology")}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all" className="mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredMidwives.map((midwife) => (
+              <MidwifeCard
+                key={midwife.id}
+                id={midwife.id}
+                name={midwife.name}
+                specialty={midwife.specialty}
+                rating={midwife.rating}
+                reviewCount={midwife.reviewCount}
+                location={midwife.location}
+                imageUrl={midwife.imageUrl}
+              />
+            ))}
+          </div>
+          {filteredMidwives.length === 0 && (
+            <Card className="bg-pink-50/50">
+              <CardContent className="p-6 flex flex-col items-center text-center">
+                <SearchIcon className="h-12 w-12 text-pink-300 mb-4" />
+                <h3 className="text-lg font-medium">{t("search.noResults")}</h3>
+                <p className="text-sm text-muted-foreground mt-2 mb-4">{t("search.noResultsDescription")}</p>
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">{t("search.suggestedAlternatives")}:</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    <Badge
+                      className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
+                      onClick={() => {
+                        setSelectedCity("Krakow")
+                        setActiveFilters((prev) => {
+                          const newFilters = prev.filter((f) => f !== "Warsaw" && f !== "Wroclaw" && f !== "Poznan")
+                          return [...newFilters, "Krakow"]
+                        })
+                      }}
+                    >
+                      Krakow ({allMidwives.filter((m) => m.city === "Krakow").length} midwives)
+                    </Badge>
+                    <Badge
+                      className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
+                      onClick={() => {
+                        setSelectedCity("Wroclaw")
+                        setActiveFilters((prev) => {
+                          const newFilters = prev.filter((f) => f !== "Warsaw" && f !== "Krakow" && f !== "Poznan")
+                          return [...newFilters, "Wroclaw"]
+                        })
+                      }}
+                    >
+                      Wroclaw ({allMidwives.filter((m) => m.city === "Wroclaw").length} midwives)
+                    </Badge>
+                    <Badge
+                      className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
+                      onClick={() => {
+                        setSelectedCity("Poznan")
+                        setActiveFilters((prev) => {
+                          const newFilters = prev.filter((f) => f !== "Warsaw" && f !== "Krakow" && f !== "Wroclaw")
+                          return [...newFilters, "Poznan"]
+                        })
+                      }}
+                    >
+                      Poznan ({allMidwives.filter((m) => m.city === "Poznan").length} midwives)
+                    </Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+        <TabsContent value="lactation" className="mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredMidwives
+              .filter((m) => m.services.includes("lactation"))
+              .map((midwife) => (
                 <MidwifeCard
                   key={midwife.id}
                   id={midwife.id}
@@ -397,151 +421,48 @@ export default function SearchPage() {
                   imageUrl={midwife.imageUrl}
                 />
               ))}
-            </div>
-            {filteredMidwives.length === 0 && (
-              <Card className="bg-pink-50/50">
-                <CardContent className="p-6 flex flex-col items-center text-center">
-                  <SearchIcon className="h-12 w-12 text-pink-300 mb-4" />
-                  <h3 className="text-lg font-medium">{t("search.noResults")}</h3>
-                  <p className="text-sm text-muted-foreground mt-2 mb-4">{t("search.noResultsDescription")}</p>
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium">{t("search.suggestedAlternatives")}:</p>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <Badge
-                        className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
-                        onClick={() => setSelectedCity("Krakow")}
-                      >
-                        Krakow ({allMidwives.filter((m) => m.city === "Krakow").length} midwives)
-                      </Badge>
-                      <Badge
-                        className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
-                        onClick={() => setSelectedCity("Wroclaw")}
-                      >
-                        Wroclaw ({allMidwives.filter((m) => m.city === "Wroclaw").length} midwives)
-                      </Badge>
-                      <Badge
-                        className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
-                        onClick={() => setSelectedCity("Poznan")}
-                      >
-                        Poznan ({allMidwives.filter((m) => m.city === "Poznan").length} midwives)
-                      </Badge>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-          <TabsContent value="lactation" className="mt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMidwives
-                .filter((m) => m.services.includes("lactation"))
-                .map((midwife) => (
-                  <MidwifeCard
-                    key={midwife.id}
-                    id={midwife.id}
-                    name={midwife.name}
-                    specialty={midwife.specialty}
-                    rating={midwife.rating}
-                    reviewCount={midwife.reviewCount}
-                    location={midwife.location}
-                    imageUrl={midwife.imageUrl}
-                  />
-                ))}
-            </div>
-          </TabsContent>
-          <TabsContent value="birth" className="mt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMidwives
-                .filter((m) => m.services.includes("birth"))
-                .map((midwife) => (
-                  <MidwifeCard
-                    key={midwife.id}
-                    id={midwife.id}
-                    name={midwife.name}
-                    specialty={midwife.specialty}
-                    rating={midwife.rating}
-                    reviewCount={midwife.reviewCount}
-                    location={midwife.location}
-                    imageUrl={midwife.imageUrl}
-                  />
-                ))}
-            </div>
-          </TabsContent>
-          <TabsContent value="gynecology" className="mt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredMidwives
-                .filter(
-                  (m) =>
-                    m.services.includes("sexologist") || m.services.includes("cytology") || m.services.includes("hpv"),
-                )
-                .map((midwife) => (
-                  <MidwifeCard
-                    key={midwife.id}
-                    id={midwife.id}
-                    name={midwife.name}
-                    specialty={midwife.specialty}
-                    rating={midwife.rating}
-                    reviewCount={midwife.reviewCount}
-                    location={midwife.location}
-                    imageUrl={midwife.imageUrl}
-                  />
-                ))}
-            </div>
-          </TabsContent>
-        </Tabs>
-      )}
-
-      {/* No Results Fallback - Only show in list view */}
-      {viewMode === "list" && filteredMidwives.length === 0 && (
-        <Card className="bg-pink-50/50">
-          <CardContent className="p-6 flex flex-col items-center text-center">
-            <SearchIcon className="h-12 w-12 text-pink-300 mb-4" />
-            <h3 className="text-lg font-medium">{t("search.noResults")}</h3>
-            <p className="text-sm text-muted-foreground mt-2 mb-4">{t("search.noResultsDescription")}</p>
-            <div className="space-y-2">
-              <p className="text-sm font-medium">{t("search.suggestedAlternatives")}:</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <Badge
-                  className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
-                  onClick={() => {
-                    setSelectedCity("Krakow")
-                    setActiveFilters((prev) => {
-                      const newFilters = prev.filter((f) => f !== "Warsaw" && f !== "Wroclaw" && f !== "Poznan")
-                      return [...newFilters, "Krakow"]
-                    })
-                  }}
-                >
-                  Krakow ({allMidwives.filter((m) => m.city === "Krakow").length} midwives)
-                </Badge>
-                <Badge
-                  className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
-                  onClick={() => {
-                    setSelectedCity("Wroclaw")
-                    setActiveFilters((prev) => {
-                      const newFilters = prev.filter((f) => f !== "Warsaw" && f !== "Krakow" && f !== "Poznan")
-                      return [...newFilters, "Wroclaw"]
-                    })
-                  }}
-                >
-                  Wroclaw ({allMidwives.filter((m) => m.city === "Wroclaw").length} midwives)
-                </Badge>
-                <Badge
-                  className="bg-pink-100 hover:bg-pink-200 text-pink-800 cursor-pointer"
-                  onClick={() => {
-                    setSelectedCity("Poznan")
-                    setActiveFilters((prev) => {
-                      const newFilters = prev.filter((f) => f !== "Warsaw" && f !== "Krakow" && f !== "Wroclaw")
-                      return [...newFilters, "Poznan"]
-                    })
-                  }}
-                >
-                  Poznan ({allMidwives.filter((m) => m.city === "Poznan").length} midwives)
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </TabsContent>
+        <TabsContent value="birth" className="mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredMidwives
+              .filter((m) => m.services.includes("birth"))
+              .map((midwife) => (
+                <MidwifeCard
+                  key={midwife.id}
+                  id={midwife.id}
+                  name={midwife.name}
+                  specialty={midwife.specialty}
+                  rating={midwife.rating}
+                  reviewCount={midwife.reviewCount}
+                  location={midwife.location}
+                  imageUrl={midwife.imageUrl}
+                />
+              ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="gynecology" className="mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredMidwives
+              .filter(
+                (m) =>
+                  m.services.includes("sexologist") || m.services.includes("cytology") || m.services.includes("hpv"),
+              )
+              .map((midwife) => (
+                <MidwifeCard
+                  key={midwife.id}
+                  id={midwife.id}
+                  name={midwife.name}
+                  specialty={midwife.specialty}
+                  rating={midwife.rating}
+                  reviewCount={midwife.reviewCount}
+                  location={midwife.location}
+                  imageUrl={midwife.imageUrl}
+                />
+              ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
