@@ -14,105 +14,129 @@ export function SearchFilters() {
 
   return (
     <div className="space-y-6 py-4">
-      <div className="mobile-section">
-        <h3 className="text-lg font-medium mb-2">{t("search.filters")}</h3>
+      <div>
+        <h3 className="text-lg font-medium">{t("search.filters")}</h3>
         <p className="text-sm text-muted-foreground">{t("search.refineResults")}</p>
       </div>
       <Separator />
 
       {/* Location */}
-      <div className="mobile-section space-y-4">
-        <h4 className="font-medium text-base">{t("search.location")}</h4>
-        <div className="space-y-3">
+      <div className="space-y-4">
+        <h4 className="font-medium">{t("search.location")}</h4>
+        <div className="space-y-2">
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input
-              placeholder={t("search.city")}
-              className="pl-12 h-12 text-base border-2 rounded-lg"
-              defaultValue="Warsaw"
-            />
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input placeholder={t("search.city")} className="pl-9" defaultValue="Warsaw" />
           </div>
-          <Input placeholder={t("search.provinceRegion")} className="h-12 text-base border-2 rounded-lg" />
+          <Input placeholder={t("search.provinceRegion")} />
         </div>
       </div>
       <Separator />
 
       {/* Service Type */}
-      <div className="mobile-section space-y-4">
-        <h4 className="font-medium text-base">{t("search.serviceType")}</h4>
-        <div className="space-y-3">
-          {[
-            { id: "lactation", label: t("serviceTypes.lactation"), defaultChecked: true },
-            { id: "psychologist", label: t("serviceTypes.psychologist") },
-            { id: "dietitian", label: t("serviceTypes.dietitian") },
-            { id: "sexologist", label: t("serviceTypes.sexologist") },
-            { id: "urogynecological", label: t("serviceTypes.urogynecological") },
-            { id: "patronage", label: t("serviceTypes.patronage") },
-            { id: "birth", label: t("serviceTypes.birth") },
-            { id: "babywearing", label: t("serviceTypes.babywearing") },
-            { id: "cytology", label: t("serviceTypes.cytology") },
-            { id: "hpv", label: t("serviceTypes.hpv") },
-            { id: "menopause", label: t("serviceTypes.menopause") },
-          ].map((service) => (
-            <div key={service.id} className="flex items-center space-x-3 touch-friendly">
-              <Checkbox id={service.id} defaultChecked={service.defaultChecked} className="h-5 w-5" />
-              <Label htmlFor={service.id} className="text-base leading-relaxed cursor-pointer flex-1">
-                {service.label}
-              </Label>
-            </div>
-          ))}
+      <div className="space-y-4">
+        <h4 className="font-medium">{t("search.serviceType")}</h4>
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox id="lactation" defaultChecked />
+            <Label htmlFor="lactation">{t("serviceTypes.lactation")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="psychologist" />
+            <Label htmlFor="psychologist">{t("serviceTypes.psychologist")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="dietitian" />
+            <Label htmlFor="dietitian">{t("serviceTypes.dietitian")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="sexologist" />
+            <Label htmlFor="sexologist">{t("serviceTypes.sexologist")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="urogynecological" />
+            <Label htmlFor="urogynecological">{t("serviceTypes.urogynecological")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="patronage" />
+            <Label htmlFor="patronage">{t("serviceTypes.patronage")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="birth" />
+            <Label htmlFor="birth">{t("serviceTypes.birth")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="babywearing" />
+            <Label htmlFor="babywearing">{t("serviceTypes.babywearing")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="cytology" />
+            <Label htmlFor="cytology">{t("serviceTypes.cytology")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="hpv" />
+            <Label htmlFor="hpv">{t("serviceTypes.hpv")}</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="menopause" />
+            <Label htmlFor="menopause">{t("serviceTypes.menopause")}</Label>
+          </div>
         </div>
       </div>
       <Separator />
 
       {/* Service Delivery Format */}
-      <div className="mobile-section space-y-4">
-        <h4 className="font-medium text-base">{t("search.serviceDeliveryFormat")}</h4>
-        <RadioGroup defaultValue="in-person" className="space-y-3">
-          {[
-            { value: "in-person", label: "In-person (at midwife's office)" },
-            { value: "at-home", label: "In-person (at patient's home)" },
-            { value: "online", label: "Online" },
-            { value: "any", label: "Any format" },
-          ].map((option) => (
-            <div key={option.value} className="flex items-center space-x-3 touch-friendly">
-              <RadioGroupItem value={option.value} id={option.value} className="h-5 w-5" />
-              <Label htmlFor={option.value} className="text-base leading-relaxed cursor-pointer flex-1">
-                {option.label}
-              </Label>
-            </div>
-          ))}
+      <div className="space-y-4">
+        <h4 className="font-medium">{t("search.serviceDeliveryFormat")}</h4>
+        <RadioGroup defaultValue="in-person">
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="in-person" id="in-person" />
+            <Label htmlFor="in-person">In-person (at midwife's office)</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="at-home" id="at-home" />
+            <Label htmlFor="at-home">In-person (at patient's home)</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="online" id="online" />
+            <Label htmlFor="online">Online</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="any" id="any" />
+            <Label htmlFor="any">Any format</Label>
+          </div>
         </RadioGroup>
       </div>
       <Separator />
 
       {/* Rating */}
-      <div className="mobile-section space-y-4">
-        <h4 className="font-medium text-base">{t("search.minimumRating")}</h4>
-        <RadioGroup defaultValue="4.5" className="space-y-3">
-          {[
-            { value: "5", label: "5 stars" },
-            { value: "4.5", label: "4.5+ stars" },
-            { value: "4", label: "4+ stars" },
-            { value: "any-rating", label: "Any rating" },
-          ].map((rating) => (
-            <div key={rating.value} className="flex items-center space-x-3 touch-friendly">
-              <RadioGroupItem value={rating.value} id={rating.value} className="h-5 w-5" />
-              <Label htmlFor={rating.value} className="text-base leading-relaxed cursor-pointer flex-1">
-                {rating.label}
-              </Label>
-            </div>
-          ))}
+      <div className="space-y-4">
+        <h4 className="font-medium">{t("search.minimumRating")}</h4>
+        <RadioGroup defaultValue="4.5">
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="5" id="r5" />
+            <Label htmlFor="r5">5 stars</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="4.5" id="r4.5" />
+            <Label htmlFor="r4.5">4.5+ stars</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="4" id="r4" />
+            <Label htmlFor="r4">4+ stars</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="any-rating" id="any-rating" />
+            <Label htmlFor="any-rating">Any rating</Label>
+          </div>
         </RadioGroup>
       </div>
 
-      <div className="flex gap-3 pt-6 mobile-section">
-        <Button variant="outline" className="flex-1 h-12 text-base rounded-lg">
+      <div className="flex gap-2 pt-4">
+        <Button variant="outline" className="flex-1">
           {t("common.reset")}
         </Button>
-        <Button className="flex-1 h-12 text-base rounded-lg bg-pink-600 hover:bg-pink-700">
-          {t("search.applyFilters")}
-        </Button>
+        <Button className="flex-1">{t("search.applyFilters")}</Button>
       </div>
     </div>
   )
