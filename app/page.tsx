@@ -18,14 +18,6 @@ export default function Home() {
     <div className="space-y-8">
       {/* Hero Section */}
       <section className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-pink-500 to-pink-600 text-white">
-        <div className="absolute inset-0 opacity-30">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1088Z_4.jpg-i7h0BI4SWGJMniFSGSgdLTnibzkccZ.jpeg"
-            alt="Background pattern"
-            fill
-            className="object-cover"
-          />
-        </div>
         <div className="relative z-10 px-6 py-8 md:py-12">
           {/* Mobile Layout - Vertical Stack */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-8">
