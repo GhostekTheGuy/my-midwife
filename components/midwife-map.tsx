@@ -68,29 +68,34 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
     return { x, y }
   }
 
-  // Convert coordinates to pixel position on the map
+  // Convert coordinates to pixel position on the map - FIXED VERSION
   const coordinateToPixel = (coord: [number, number]) => {
     const mapWidth = 800
     const mapHeight = 600
+    const tileSize = 256
 
-    // Web Mercator projection
+    // Get tile coordinates for both the point and center
+    const pointTile = latLngToTile(coord[1], coord[0], zoom)
+    const centerTile = latLngToTile(center[1], center[0], zoom)
+
+    // Calculate pixel position within tiles
     const scale = Math.pow(2, zoom)
     
-    // Convert longitude to x
-    const x = ((coord[0] + 180) / 360) * scale * 256
+    // Point position in world coordinates
+    const pointWorldX = ((coord[0] + 180) / 360) * scale
+    const pointWorldY = ((1 - Math.log(Math.tan((coord[1] * Math.PI) / 180) + 1 / Math.cos((coord[1] * Math.PI) / 180)) / Math.PI) / 2) * scale
     
-    // Convert latitude to y using Web Mercator formula
-    const latRad = (coord[1] * Math.PI) / 180
-    const y = ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * scale * 256
+    // Center position in world coordinates  
+    const centerWorldX = ((center[0] + 180) / 360) * scale
+    const centerWorldY = ((1 - Math.log(Math.tan((center[1] * Math.PI) / 180) + 1 / Math.cos((center[1] * Math.PI) / 180)) / Math.PI) / 2) * scale
 
-    // Convert center coordinates
-    const centerX = ((center[0] + 180) / 360) * scale * 256
-    const centerLatRad = (center[1] * Math.PI) / 180
-    const centerY = ((1 - Math.log(Math.tan(centerLatRad) + 1 / Math.cos(centerLatRad)) / Math.PI) / 2) * scale * 256
+    // Calculate pixel offset from center
+    const pixelX = (pointWorldX - centerWorldX) * tileSize + mapWidth / 2
+    const pixelY = (pointWorldY - centerWorldY) * tileSize + mapHeight / 2
 
     return {
-      x: x - centerX + mapWidth / 2,
-      y: y - centerY + mapHeight / 2,
+      x: pixelX,
+      y: pixelY,
     }
   }
 
@@ -146,7 +151,7 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
     }
   }
 
-  // Handle mouse drag
+  // Handle mouse drag - IMPROVED VERSION
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isDragging && dragStart && mapRef.current) {
       const deltaX = e.clientX - dragStart.x
@@ -154,16 +159,23 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
       
       // Convert pixel movement to coordinate movement
       const scale = Math.pow(2, zoom)
+      const tileSize = 256
       const mapWidth = 800
       const mapHeight = 600
       
-      // Calculate movement in degrees
-      const deltaLng = -(deltaX / mapWidth) * (360 / scale)
+      // Calculate movement in world coordinates
+      const worldDeltaX = -deltaX / tileSize / scale
+      const worldDeltaY = -deltaY / tileSize / scale
       
-      // For latitude, we need to account for the Mercator projection
-      const currentLatRad = (dragStart.centerY * Math.PI) / 180
-      const deltaLatRad = (deltaY / mapHeight) * (2 * Math.PI / scale)
-      const newLatRad = currentLatRad + deltaLatRad
+      // Convert world delta to lat/lng delta
+      const deltaLng = worldDeltaX * 360
+      
+      // For latitude, convert from world coordinates back to degrees
+      const currentWorldY = ((1 - Math.log(Math.tan((dragStart.centerY * Math.PI) / 180) + 1 / Math.cos((dragStart.centerY * Math.PI) / 180)) / Math.PI) / 2)
+      const newWorldY = currentWorldY + worldDeltaY
+      
+      // Convert back to latitude
+      const newLatRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * newWorldY)))
       const newLat = (newLatRad * 180) / Math.PI
       
       // Clamp latitude to valid range
