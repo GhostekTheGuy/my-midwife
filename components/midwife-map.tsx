@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react"
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
-import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk"
+// Import the Leaflet MapTiler Plugin
+import "@maptiler/leaflet-maptilersdk"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/contexts/language-context"
@@ -174,20 +175,17 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
         dragging: true,
       })
 
-      // Create MapTiler layer
-      const mtLayer = new MaptilerLayer({
+      // Create a MapTiler Layer inside Leaflet using the correct API
+      const mtLayer = new (L as any).maptiler.maptilerLayer({
         apiKey: "cM7IF9RAJLNUuMNpfjtq",
-        style: "streets-v2",
-      })
-
-      mtLayer.addTo(map)
+      }).addTo(map)
 
       // Handle layer load events
       mtLayer.on("load", () => {
         setIsLoading(false)
       })
 
-      mtLayer.on("error", (e) => {
+      mtLayer.on("error", (e: any) => {
         console.error("MapTiler layer error:", e)
         setError("Failed to load map tiles. Please check your connection.")
         setIsLoading(false)
