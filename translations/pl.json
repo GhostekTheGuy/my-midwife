@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "MyMidwife"
+    "title": "MyMidwife",
+    "description": "Połącz się z położnymi w sprawach zdrowia intymnego i okołoporodowego"
   },
   "nav": {
     "menu": "Przełącz menu",
@@ -11,7 +12,12 @@
     "chat": "Czat",
     "diary": "Dziennik",
     "nutrition": "Żywienie",
-    "bmi": "Kalkulator BMI"
+    "bmi": "Kalkulator BMI",
+    "calendar": "Kalendarz"
+  },
+  "notifications": {
+    "markAllRead": "Oznacz wszystkie jako przeczytane",
+    "viewAll": "Zobacz wszystkie powiadomienia"
   },
   "user": {
     "profile": "Profil",
@@ -23,107 +29,313 @@
     "english": "Angielski",
     "polish": "Polski"
   },
+  "common": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "confirm": "Potwierdź",
+    "back": "Wstecz",
+    "next": "Dalej",
+    "submit": "Wyślij",
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "success": "Sukces",
+    "close": "Zamknij",
+    "open": "Otwórz",
+    "view": "Zobacz",
+    "add": "Dodaj",
+    "remove": "Usuń",
+    "update": "Aktualizuj",
+    "create": "Utwórz",
+    "search": "Szukaj",
+    "filter": "Filtruj",
+    "sort": "Sortuj",
+    "clear": "Wyczyść",
+    "apply": "Zastosuj",
+    "reset": "Resetuj",
+    "readMore": "Czytaj więcej",
+    "review": {
+      "title": "Zostaw recenzję",
+      "forAppointmentWith": "za wizytę z",
+      "rating": "Twoja ocena",
+      "comment": "Twój komentarz",
+      "commentPlaceholder": "Podziel się swoim doświadczeniem...",
+      "submitReview": "Wyślij recenzję",
+      "toast": {
+        "error": "Błąd",
+        "selectRating": "Proszę wybrać ocenę.",
+        "success": "Sukces!",
+        "reviewSubmitted": "Recenzja została pomyślnie wysłana!",
+        "submissionFailed": "Nie udało się wysłać recenzji. Spróbuj ponownie."
+      }
+    }
+  },
+  "appointments": {
+    "title": "Wizyty",
+    "book": "Umów wizytę",
+    "upcoming": "Nadchodzące wizyty",
+    "past": "Przeszłe wizyty",
+    "history": "Historia wizyt",
+    "noUpcoming": "Brak nadchodzących wizyt",
+    "noPast": "Brak przeszłych wizyt",
+    "reschedule": "Przełóż",
+    "cancel": "Anuluj",
+    "join": "Dołącz",
+    "message": "Wiadomość",
+    "review": "Oceń wizytę",
+    "bookAgain": "Umów ponownie",
+    "reviewed": "Oceniono",
+    "confirmed": "Potwierdzona",
+    "completed": "Zakończona",
+    "findMidwife": "Znajdź położną",
+    "noAppointments": "Nie masz zaplanowanych wizyt. Znajdź położną i umów się na wizytę.",
+    "types": {
+      "online": "Konsultacja online",
+      "office": "Wizyta w gabinecie",
+      "home": "Wizyta domowa"
+    }
+  },
+  "search": {
+    "title": "Znajdź położne",
+    "description": "Szukaj położnych według lokalizacji, usług i dostępności",
+    "placeholder": "Szukaj według nazwy, specjalizacji lub lokalizacji",
+    "filters": "Filtry",
+    "location": "Lokalizacja",
+    "specialty": "Specjalizacja",
+    "availability": "Dostępność",
+    "rating": "Ocena",
+    "experience": "Doświadczenie",
+    "language": "Język",
+    "price": "Zakres cenowy",
+    "results": "Wyniki wyszukiwania",
+    "noResults": "Nie znaleziono położnych",
+    "noResultsDescription": "Nie mogliśmy znaleźć położnych spełniających Twoje kryteria wyszukiwania. Spróbuj dostosować filtry lub szukać w innej lokalizacji.",
+    "suggestedAlternatives": "Sugerowane alternatywy:",
+    "viewProfile": "Zobacz profil",
+    "bookNow": "Umów teraz",
+    "refineResults": "Doprecyzuj wyniki wyszukiwania",
+    "city": "Miasto",
+    "provinceRegion": "Województwo/Region",
+    "serviceType": "Rodzaj usługi",
+    "serviceDeliveryFormat": "Format świadczenia usługi",
+    "minimumRating": "Minimalna ocena",
+    "applyFilters": "Zastosuj filtry",
+    "all": "Wszystkie",
+    "lactation": "Laktacja",
+    "birthPrep": "Przygotowanie do porodu",
+    "gynecology": "Ginekologia",
+    "warsaw": "Warszawa",
+    "lactationConsultant": "Konsultant laktacyjny",
+    "inPerson": "Osobiście",
+    "certifiedLactationConsultant": "Certyfikowany konsultant laktacyjny",
+    "psychologist": "Psycholog",
+    "dietitian": "Dietetyk",
+    "sexologist": "Seksuolog",
+    "urogynecologicalTherapist": "Terapeuta uroginekologiczny",
+    "patronageVisits": "Wizyty patronażowe",
+    "birthPreparation": "Przygotowanie do porodu",
+    "babywearing": "Noszenie dzieci",
+    "cytology": "Cytologia",
+    "hpvVaccinations": "Szczepienia HPV",
+    "menopauseSupport": "Wsparcie w menopauzie",
+    "inPersonOffice": "Osobiście (w gabinecie położnej)",
+    "inPersonHome": "Osobiście (w domu pacjentki)",
+    "online": "Online",
+    "anyFormat": "Dowolny format",
+    "fiveStars": "5 gwiazdek",
+    "fourPointFivePlus": "4,5+ gwiazdek",
+    "fourPlus": "4+ gwiazdek",
+    "anyRating": "Dowolna ocena",
+    "list": "Lista",
+    "map": "Mapa"
+  },
+  "bmi": {
+    "title": "Kalkulator BMI",
+    "description": "Wprowadź swój wzrost i wagę, aby obliczyć wskaźnik masy ciała",
+    "height": "Wzrost",
+    "weight": "Waga",
+    "calculate": "Oblicz BMI",
+    "result": "Twój wynik BMI",
+    "category": "Kategoria",
+    "units": "Jednostki",
+    "metric": "Metryczne (cm, kg)",
+    "imperial": "Imperialne (ft, in, lbs)",
+    "feet": "stopy",
+    "inches": "cale",
+    "saveResult": "Zapisz wynik",
+    "viewTrends": "Zobacz trendy",
+    "nutritionPlan": "Plan żywieniowy",
+    "recommendations": "Zalecenia",
+    "healthRecommendations": "Zalecenia zdrowotne:",
+    "healthConsiderations": "Uwagi zdrowotne:",
+    "importantNote": "Ważna uwaga",
+    "disclaimer": "Ten kalkulator BMI służy wyłącznie celom informacyjnym. W celu uzyskania spersonalizowanych porad zdrowotnych, szczególnie w czasie ciąży lub w przypadku problemów zdrowotnych, skonsultuj się z położną lub lekarzem.",
+    "categories": {
+      "underweight": "Niedowaga",
+      "normal": "Waga prawidłowa",
+      "overweight": "Nadwaga",
+      "obese": "Otyłość"
+    },
+    "scale": "Skala BMI",
+    "remaining": "pozostało"
+  },
+  "diary": {
+    "title": "Dziennik zdrowia",
+    "newEntry": "Nowy wpis do dziennika",
+    "recentEntries": "Ostatnie wpisy",
+    "mood": "Nastrój",
+    "symptoms": "Objawy",
+    "notes": "Notatki",
+    "date": "Data",
+    "bloodPressure": "Ciśnienie krwi (mmHg)",
+    "systolic": "Skurczowe (górne)",
+    "diastolic": "Rozkurczowe (dolne)",
+    "pickDate": "Wybierz datę",
+    "selectSymptoms": "Objawy (zaznacz wszystkie, które występują)",
+    "additionalNotes": "Dodaj dodatkowe notatki o tym, jak się dzisiaj czujesz...",
+    "saveEntry": "Zapisz wpis",
+    "loadMore": "Załaduj więcej",
+    "noEntries": "Brak wpisów w dzienniku",
+    "startTracking": "Zacznij śledzić swoje zdrowie, tworząc pierwszy wpis w dzienniku.",
+    "moods": {
+      "great": "Świetnie",
+      "good": "Dobrze",
+      "neutral": "Neutralnie",
+      "tired": "Zmęczona",
+      "bad": "Źle"
+    },
+    "symptoms": {
+      "nausea": "Nudności",
+      "headache": "Ból głowy",
+      "fatigue": "Zmęczenie",
+      "cramps": "Skurcze",
+      "bloating": "Wzdęcia",
+      "breastTenderness": "Wrażliwość piersi",
+      "insomnia": "Bezsenność",
+      "moodSwings": "Wahania nastroju"
+    }
+  },
+  "chat": {
+    "title": "Wiadomości",
+    "newMessage": "Nowa wiadomość",
+    "typeMessage": "Napisz wiadomość...",
+    "send": "Wyślij",
+    "online": "Online",
+    "offline": "Offline",
+    "noConversations": "Brak rozmów",
+    "startConversation": "Rozpocznij rozmowę z położną, umówiwszy się na wizytę lub przeglądając jej profil",
+    "unreadMessage": "Nieprzeczytana wiadomość"
+  },
+  "nutrition": {
+    "title": "Żywienie",
+    "dashboard": "Panel żywienia",
+    "foodDiary": "Dziennik żywieniowy",
+    "mealPlanner": "Planer posiłków",
+    "todayIntake": "Dzisiejsze spożycie",
+    "calories": "Kalorie",
+    "protein": "Białko",
+    "carbs": "Węglowodany",
+    "fat": "Tłuszcze",
+    "water": "Woda",
+    "glasses": "szklanki",
+    "goal": "Cel",
+    "progress": "Dzisiejszy postęp żywieniowy",
+    "logFood": "Zapisz jedzenie",
+    "mealPlans": "Plany posiłków",
+    "updateBMI": "Aktualizuj BMI",
+    "recentMeals": "Ostatnie posiłki",
+    "viewFullDiary": "Zobacz pełny dziennik żywieniowy",
+    "breakfast": "Śniadanie",
+    "lunch": "Obiad",
+    "dinner": "Kolacja",
+    "snacks": "Przekąski"
+  },
+  "profile": {
+    "title": "Profil",
+    "personalInfo": "Informacje osobiste",
+    "preferences": "Preferencje",
+    "healthInfo": "Informacje zdrowotne",
+    "notifications": "Ustawienia powiadomień",
+    "privacy": "Ustawienia prywatności",
+    "account": "Ustawienia konta"
+  },
   "midwife": {
-    "find_midwives": "Znajdź położne",
-    "search_midwives": "Szukaj położnych...",
-    "no_midwives_found": "Nie znaleziono położnych",
-    "find_midwife": "Znajdź położną",
-    "midwife_profile": "Profil położnej",
-    "start_chat_with_midwife": "Rozpocznij rozmowę z położną",
-    "consult_with_midwife": "skonsultuj się z położną"
+    "profile": "Profil położnej",
+    "specialty": "Specjalizacja",
+    "experience": "Doświadczenie",
+    "education": "Wykształcenie",
+    "certifications": "Certyfikaty",
+    "languages": "Języki",
+    "availability": "Dostępność",
+    "pricing": "Cennik",
+    "reviews": "Opinie",
+    "about": "O mnie",
+    "contact": "Kontakt",
+    "book": "Umów wizytę",
+    "message": "Wyślij wiadomość",
+    "verifiedReviews": "zweryfikowanych opinii",
+    "selectDate": "Wybierz datę",
+    "availableSlots": "Dostępne terminy",
+    "selectDateFirst": "Wybierz datę, aby zobaczyć dostępne terminy",
+    "appointmentTypes": "Rodzaje wizyt",
+    "duration": "Czas trwania",
+    "minutes": "minut",
+    "find_midwife": "Znajdź położną"
   },
   "home": {
     "hero": {
       "title": "Znajdź idealną położną dla swoich potrzeb",
-      "subtitle": "Połącz się z wykwalifikowanymi położnymi specjalizującymi się w zdrowiu intymnym i okołoporodowym.",
+      "description": "Połącz się z wykwalifikowanymi położnymi specjalizującymi się w zdrowiu intymnym i okołoporodowym",
       "findMidwife": "Znajdź położną",
       "aboutUs": "O nas"
     },
     "stats": {
       "certifiedMidwives": "Certyfikowane położne",
-      "satisfiedPatients": "Zadowolone pacjentki",
+      "happyPatients": "Zadowolone pacjentki",
       "supportAvailable": "Wsparcie dostępne",
       "satisfactionRate": "Wskaźnik zadowolenia"
     },
     "quickActions": {
       "title": "Szybkie akcje",
-      "findMidwife": {
-        "title": "Znajdź położną",
-        "description": "Szukaj według lokalizacji i usług"
-      },
-      "bookAppointment": {
-        "title": "Umów wizytę",
-        "description": "Zaplanuj wizyty"
-      },
-      "healthDiary": {
-        "title": "Dziennik zdrowia",
-        "description": "Śledź swoje samopoczucie"
-      },
-      "bmiCalculator": {
-        "title": "Kalkulator BMI",
-        "description": "Sprawdź swój wskaźnik masy ciała"
-      },
-      "nutrition": {
-        "title": "Żywienie",
-        "description": "Śledź posiłki i otrzymuj plany"
-      },
-      "chat": {
-        "title": "Czat",
-        "description": "Napisz do swojej położnej"
-      }
+      "findMidwife": "Znajdź położną",
+      "searchDescription": "Szukaj według lokalizacji i usług",
+      "bookVisit": "Umów wizytę",
+      "scheduleDescription": "Zaplanuj wizyty",
+      "healthDiary": "Dziennik zdrowia",
+      "trackDescription": "Śledź swoje samopoczucie",
+      "bmiCalculator": "Kalkulator BMI",
+      "bmiDescription": "Sprawdź swój wskaźnik masy ciała",
+      "nutrition": "Żywienie",
+      "nutritionDescription": "Śledź posiłki i otrzymuj plany",
+      "chat": "Czat",
+      "chatDescription": "Napisz do swojej położnej"
     },
-    "upcomingAppointment": {
-      "title": "Nadchodząca wizyta",
-      "viewAll": "Zobacz wszystkie"
-    },
-    "healthOverview": {
-      "title": "Wgląd w zdrowie",
-      "bmiStatus": "Status BMI",
-      "nutritionStatus": "Status żywienia",
-      "diaryEntries": "Wpisy w dzienniku"
-    },
-    "healthTip": {
-      "title": "Porada zdrowotna dnia",
-      "prenatalNutrition": "Odżywianie w ciąży",
-      "description": "Właściwe odżywianie w ciąży jest kluczowe zarówno dla matki, jak i dziecka. Skup się na produktach bogatych w składniki odżywcze, takich jak owoce, warzywa, chude białka i pełnoziarniste produkty. Unikaj surowego mięsa, niepasteryzowanego nabiału i nadmiernej ilości kofeiny. Pij dużo wody przez cały dzień."
-    },
+    "upcomingAppointment": "Nadchodząca wizyta",
+    "viewAll": "Zobacz wszystkie",
+    "featuredMidwives": "Polecane położne",
     "healthInsights": {
       "title": "Wgląd w zdrowie",
       "bmiStatus": "Status BMI",
       "normalRange": "Zakres normalny",
-      "nextCheckup": "Za 2 tygodnie",
+      "nextCheckup": "Następna kontrola",
+      "inTwoWeeks": "Za 2 tygodnie",
       "diaryEntries": "Wpisy w dzienniku",
       "fiveThisWeek": "5 w tym tygodniu"
-    }
-  },
-  "notifications": {
-    "title": "Powiadomienia",
-    "markAllRead": "Oznacz wszystkie jako przeczytane",
-    "viewAll": "Zobacz wszystkie powiadomienia",
-    "newAppointment": "Nowa wizyta umówiona z {midwifeName} dnia {date} o {time}.",
-    "messageFromMidwife": "Nowa wiadomość od {midwifeName}: \"{message}\"",
-    "appointmentReminder": "Przypomnienie: Twoja wizyta z {midwifeName} jest jutro o {time}.",
-    "healthTip": "Dostępna nowa porada zdrowotna: {tipTitle}.",
-    "noNotifications": "Brak nowych powiadomień."
-  },
-  "settings": {
-    "title": "Ustawienia",
-    "language": {
-      "title": "Język",
-      "description": "Zmień język aplikacji."
     },
-    "notifications": {
-      "title": "Powiadomienia",
-      "description": "Zarządzaj preferencjami powiadomień.",
-      "email": "Powiadomienia e-mail",
-      "sms": "Powiadomienia SMS",
-      "push": "Powiadomienia push"
+    "progress": {
+      "title": "Twój postęp",
+      "appointments": "Wizyty",
+      "appointmentsCompleted": "12 ukończonych",
+      "diaryEntries": "Wpisy w dzienniku",
+      "entriesCount": "45 wpisów",
+      "healthGoals": "Cele zdrowotne",
+      "goalsProgress": "3 z 5 osiągnięte"
     },
-    "privacy": {
-      "title": "Prywatność",
-      "description": "Zarządzaj ustawieniami prywatności.",
-      "dataSharing": "Zezwól na udostępnianie danych",
-      "personalization": "Włącz spersonalizowane treści"
+    "healthTip": {
+      "title": "Dzisiejsza porada zdrowotna",
+      "prenatalNutrition": "Odżywianie w ciąży",
+      "description": "Właściwe odżywianie w ciąży jest kluczowe zarówno dla matki, jak i dziecka. Skup się na produktach bogatych w składniki odżywcze, takich jak owoce, warzywa, chude białka i pełnoziarniste produkty. Unikaj surowego mięsa, niepasteryzowanego nabiału i nadmiernej ilości kofeiny. Pij dużo wody przez cały dzień."
     }
   },
   "healthTips": {
@@ -147,25 +359,6 @@
     "postpartumRecovery": {
       "title": "Powrót do formy po porodzie: Czego się spodziewać",
       "description": "Przejdź przez okres poporodowy z pewnością siebie. Ten przewodnik obejmuje powrót do zdrowia fizycznego, zmiany emocjonalne i wskazówki dotyczące samoopieki dla nowych matek."
-    }
-  },
-  "common": {
-    "back": "Wróć",
-    "readMore": "Czytaj więcej",
-    "review": {
-      "title": "Zostaw recenzję",
-      "forAppointmentWith": "za wizytę z",
-      "rating": "Twoja ocena",
-      "comment": "Twój komentarz",
-      "commentPlaceholder": "Podziel się swoim doświadczeniem...",
-      "submitReview": "Wyślij recenzję",
-      "toast": {
-        "error": "Błąd",
-        "selectRating": "Proszę wybrać ocenę.",
-        "success": "Sukces!",
-        "reviewSubmitted": "Recenzja została pomyślnie wysłana!",
-        "submissionFailed": "Nie udało się wysłać recenzji. Spróbuj ponownie."
-      }
     }
   },
   "about": {
