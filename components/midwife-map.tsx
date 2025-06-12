@@ -50,9 +50,17 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
         await import("leaflet/dist/leaflet.css")
         await import("@maptiler/leaflet-maptilersdk")
 
+        // Get the extended L object from window after plugin loading
+        const extendedL = (window as any).L || L
+
+        // Check if MapTiler plugin is properly loaded
+        if (!extendedL.maptiler || !extendedL.maptiler.maptilerLayer) {
+          throw new Error("MapTiler plugin not properly loaded")
+        }
+
         // Fix for default markers in Leaflet
-        delete (L.Icon.Default.prototype as any)._getIconUrl
-        L.Icon.Default.mergeOptions({
+        delete (extendedL.Icon.Default.prototype as any)._getIconUrl
+        extendedL.Icon.Default.mergeOptions({
           iconRetinaUrl: '/marker-icon.png',
           iconUrl: '/marker-icon.png',
           shadowUrl: '/marker-icon.png',
@@ -77,15 +85,15 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
         }
 
         // Create map
-        const map = L.map(mapRef.current, {
-          center: L.latLng(center[0], center[1]),
+        const map = extendedL.map(mapRef.current, {
+          center: extendedL.latLng(center[0], center[1]),
           zoom: zoom,
           zoomControl: false, // We'll add custom controls
           attributionControl: true,
         })
 
         // Add MapTiler layer
-        const mtLayer = new (L as any).maptiler.maptilerLayer({
+        const mtLayer = new extendedL.maptiler.maptilerLayer({
           apiKey: "cM7IF9RAJLNUuMNpfjtq", // Free MapTiler API key
           style: "streets-v2", // You can change this to other styles
         }).addTo(map)
@@ -93,7 +101,7 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
         mapInstanceRef.current = map
 
         // Add markers
-        addMarkers(L, map)
+        addMarkers(extendedL, map)
 
         if (mounted) {
           setIsLoading(false)
