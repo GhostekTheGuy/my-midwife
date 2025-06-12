@@ -28,7 +28,6 @@ export default function Home() {
         </div>
         <div className="relative z-10 flex items-center justify-between px-6 py-12">
           <div className="flex-1 space-y-6">
-            <Badge className="bg-white/20 hover:bg-white/30 text-white w-fit">{t("app.description")}</Badge>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight select-text">
               {t("home.hero.title")}
             </h1>
