@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card"
 import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
 import { ZoomIn, ZoomOut, RotateCcw, Loader2 } from "lucide-react"
-import { generateMapUrl } from "@/app/actions/map-actions"
 
 interface MidwifeLocation {
   id: string
@@ -29,7 +28,6 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
   const [zoom, setZoom] = useState(11)
   const [center, setCenter] = useState<[number, number]>([21.0122, 52.2297]) // Warsaw default
   const [selectedMidwife, setSelectedMidwife] = useState<string | null>(null)
-  const [mapUrl, setMapUrl] = useState<string>("")
   const [isLoadingMap, setIsLoadingMap] = useState(false)
   const [mapError, setMapError] = useState<string | null>(null)
 
@@ -49,26 +47,20 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
     }
   }, [midwives])
 
-  // Generate map URL when center, zoom, or midwives change
-  useEffect(() => {
-    const fetchMapUrl = async () => {
-      setIsLoadingMap(true)
-      setMapError(null)
+  // Generate OpenStreetMap tile URL
+  const generateTileUrl = (x: number, y: number, z: number) => {
+    return `https://tile.openstreetmap.org/${z}/${x}/${y}.png`
+  }
 
-      try {
-        const url = await generateMapUrl(center, zoom, midwives)
-        setMapUrl(url)
-      } catch (error) {
-        console.error("Failed to generate map URL:", error)
-        setMapError("Failed to load map")
-        setMapUrl("/map-error.png")
-      } finally {
-        setIsLoadingMap(false)
-      }
-    }
-
-    fetchMapUrl()
-  }, [center, zoom, midwives])
+  // Convert lat/lng to tile coordinates
+  const latLngToTile = (lat: number, lng: number, zoom: number) => {
+    const x = Math.floor(((lng + 180) / 360) * Math.pow(2, zoom))
+    const y = Math.floor(
+      ((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) *
+        Math.pow(2, zoom)
+    )
+    return { x, y }
+  }
 
   // Convert coordinates to pixel position on the map
   const coordinateToPixel = (coord: [number, number]) => {
@@ -127,6 +119,37 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
     }
   }
 
+  // Generate map tiles for display
+  const generateMapTiles = () => {
+    const tileSize = 256
+    const mapWidth = 800
+    const mapHeight = 600
+    
+    const centerTile = latLngToTile(center[1], center[0], zoom)
+    const tilesX = Math.ceil(mapWidth / tileSize) + 1
+    const tilesY = Math.ceil(mapHeight / tileSize) + 1
+    
+    const tiles = []
+    
+    for (let x = centerTile.x - Math.floor(tilesX / 2); x <= centerTile.x + Math.floor(tilesX / 2); x++) {
+      for (let y = centerTile.y - Math.floor(tilesY / 2); y <= centerTile.y + Math.floor(tilesY / 2); y++) {
+        if (x >= 0 && y >= 0 && x < Math.pow(2, zoom) && y < Math.pow(2, zoom)) {
+          tiles.push({
+            x,
+            y,
+            url: generateTileUrl(x, y, zoom),
+            left: (x - centerTile.x) * tileSize + mapWidth / 2 - tileSize / 2,
+            top: (y - centerTile.y) * tileSize + mapHeight / 2 - tileSize / 2,
+          })
+        }
+      }
+    }
+    
+    return tiles
+  }
+
+  const mapTiles = generateMapTiles()
+
   return (
     <Card className={`overflow-hidden relative ${className}`}>
       <div className="relative w-full h-full min-h-[400px]">
@@ -152,18 +175,27 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
           </div>
         )}
 
-        {/* Map Image */}
-        {mapUrl && !isLoadingMap && (
-          <img
-            src={mapUrl || "/placeholder.svg"}
-            alt="Map showing midwife locations"
-            className="w-full h-full object-cover"
-            style={{ maxWidth: "100%", height: "auto", minHeight: "400px" }}
-            onError={() => {
-              setMapError("Failed to load map image")
-              setMapUrl("/map-error.png")
-            }}
-          />
+        {/* Map Tiles */}
+        {!isLoadingMap && !mapError && (
+          <div className="absolute inset-0 overflow-hidden">
+            {mapTiles.map((tile, index) => (
+              <img
+                key={`${tile.x}-${tile.y}-${zoom}`}
+                src={tile.url}
+                alt=""
+                className="absolute"
+                style={{
+                  left: tile.left,
+                  top: tile.top,
+                  width: 256,
+                  height: 256,
+                }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+            ))}
+          </div>
         )}
 
         {/* Interactive Markers Overlay */}
@@ -272,6 +304,11 @@ export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeM
             </div>
           </div>
         )}
+
+        {/* Attribution */}
+        <div className="absolute bottom-2 right-2 text-xs text-gray-500 bg-white/80 px-2 py-1 rounded">
+          © OpenStreetMap contributors
+        </div>
       </div>
     </Card>
   )
