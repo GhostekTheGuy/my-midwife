@@ -59,19 +59,6 @@ export function AnimatedGradientBackground() {
         <div className="interactive" ref={interBubbleRef}></div>
       </div>
       <style jsx>{`
-:root {
-  --color-bg1: #ffffff;
-  --color-bg2: #FFFEF9;
-  --color1: 255, 255, 255;
-  --color2: 255, 192, 203;
-  --color3: 255, 182, 193;
-  --color4: 255, 228, 225;
-  --color5: 255, 240, 245;
-  --color-interactive: 255, 192, 203;
-  --circle-size: 80%;
-  --blending: hard-light;
-}
-
         @keyframes moveInCircle {
           0% {
             transform: rotate(0deg);
@@ -116,7 +103,7 @@ export function AnimatedGradientBackground() {
           background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
           top: 0;
           left: 0;
-          opacity: 0.3; /* Zmieniona przezroczystość na 10% */
+          opacity: 0.3;
         }
 
         .gradients-container {
