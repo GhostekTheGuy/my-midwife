@@ -8,10 +8,12 @@ import { Calendar, MapPin, MessageCircle, Star } from "lucide-react"
 import { MidwifeAvailability } from "@/components/midwife-availability"
 import { MidwifeReviews } from "@/components/midwife-reviews"
 
-export default function MidwifeProfilePage({ params }: { params: { id: string } }) {
+export default async function MidwifeProfilePage({ params }: { params: { id: string } }) {
+  const resolvedParams = await params;
+  
   // This would normally come from an API based on the ID
   const midwife = {
-    id: params.id,
+    id: resolvedParams.id,
     name: "Dr. Anna Kowalska",
     specialty: "Certified Lactation Consultant",
     bio: "I am a certified lactation consultant with over 10 years of experience helping new mothers. I specialize in breastfeeding support, latch issues, and milk supply concerns. My approach is gentle, patient-centered, and focused on empowering mothers.",
