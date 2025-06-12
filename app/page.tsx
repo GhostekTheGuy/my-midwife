@@ -37,6 +37,19 @@ export default function Home() {
               <p className="text-white/90 text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 select-text">
                 {t("home.hero.description")}
               </p>
+
+              {/* Lottie Animation - Responsive - Moved above buttons and made 20% smaller */}
+              <div className="w-full max-w-[240px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[480px] mx-auto lg:hidden">
+                <div className="aspect-square relative">
+                  <DotLottieReact
+                    src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
+                    loop
+                    autoplay
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
                 <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-white/90 pointer-events-auto">
                   <Link href="/search">
@@ -55,8 +68,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Lottie Animation - Responsive */}
-            <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto lg:mx-0 lg:w-1/2 xl:w-2/5">
+            {/* Lottie Animation - Desktop only - Made 20% smaller */}
+            <div className="hidden lg:block w-full max-w-[400px] lg:max-w-[480px] xl:max-w-[560px] mx-auto lg:mx-0 lg:w-1/2 xl:w-2/5">
               <div className="aspect-square relative">
                 <DotLottieReact
                   src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
