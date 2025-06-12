@@ -26,37 +26,59 @@ export default function Home() {
             className="object-cover"
           />
         </div>
-        <div className="relative z-10 flex items-center justify-between px-6 py-12">
-          <div className="flex-1 space-y-6">
-            <Badge className="bg-white/20 hover:bg-white/30 text-white w-fit">{t("app.description")}</Badge>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight select-text">
-              {t("home.hero.title")}
-            </h1>
-            <p className="text-white/90 text-lg md:text-xl max-w-2xl select-text">{t("home.hero.description")}</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-white/90 pointer-events-auto">
-                <Link href="/search">
-                  <Search className="mr-2 h-5 w-5" />
-                  {t("home.hero.findMidwife")}
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="bg-transparent border-white text-white hover:bg-white/10 pointer-events-auto"
-              >
-                <Link href="/about">{t("home.hero.aboutUs")}</Link>
-              </Button>
+        <div className="relative z-10 px-6 py-8 md:py-12">
+          {/* Mobile Layout - Vertical Stack */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-8">
+            {/* Text Content */}
+            <div className="flex-1 space-y-4 md:space-y-6 text-center lg:text-left">
+              <h1 className="text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-bold leading-tight select-text">
+                {t("home.hero.title")}
+              </h1>
+              <p className="text-white/90 text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 select-text">
+                {t("home.hero.description")}
+              </p>
+
+              {/* Lottie Animation - Responsive - Moved above buttons and made 20% smaller */}
+              <div className="w-full max-w-[240px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[480px] mx-auto lg:hidden">
+                <div className="aspect-square relative">
+                  <DotLottieReact
+                    src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
+                    loop
+                    autoplay
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
+                <Button asChild size="lg" className="bg-white text-pink-600 hover:bg-white/90 pointer-events-auto">
+                  <Link href="/search">
+                    <Search className="mr-2 h-5 w-5" />
+                    {t("home.hero.findMidwife")}
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="bg-transparent border-white text-white hover:bg-white/10 pointer-events-auto"
+                >
+                  <Link href="/about">{t("home.hero.aboutUs")}</Link>
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="w-full lg:w-1/2 xl:w-1/3 aspect-square relative max-w-md">
-            <DotLottieReact
-              src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
-              loop
-              autoplay
-              className="object-cover rounded-xl w-full h-full" // Dodaj klasy, aby zachować stylizację obrazu
-            />
+
+            {/* Lottie Animation - Desktop only - Made 20% smaller */}
+            <div className="hidden lg:block w-full max-w-[400px] lg:max-w-[480px] xl:max-w-[560px] mx-auto lg:mx-0 lg:w-1/2 xl:w-2/5">
+              <div className="aspect-square relative">
+                <DotLottieReact
+                  src="https://lottie.host/d0ff7847-e295-426a-b21e-0f650053fecd/8BRjiu3KzU.lottie"
+                  loop
+                  autoplay
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
