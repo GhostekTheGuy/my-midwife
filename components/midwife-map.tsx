@@ -1,11 +1,14 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Card } from "@/components/ui/card"
-import { useLanguage } from "@/contexts/language-context"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/contexts/language-context"
 import { ZoomIn, ZoomOut, RotateCcw, Loader2 } from "lucide-react"
 import Image from "next/image"
+
+// Import Leaflet types
+import type { Map as LeafletMap, Marker, DivIcon } from "leaflet"
 
 interface MidwifeLocation {
   id: string
@@ -25,461 +28,430 @@ interface MidwifeMapProps {
 }
 
 export function MidwifeMap({ midwives, onMarkerClick, className = "" }: MidwifeMapProps) {
-  const { t } = useLanguage()
-  const [zoom, setZoom] = useState(11)
-  const [center, setCenter] = useState<[number, number]>([21.0122, 52.2297]) // Warsaw default
-  const [selectedMidwife, setSelectedMidwife] = useState<string | null>(null)
-  const [hoveredMidwife, setHoveredMidwife] = useState<string | null>(null)
-  const [isLoadingMap, setIsLoadingMap] = useState(false)
-  const [mapError, setMapError] = useState<string | null>(null)
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragStart, setDragStart] = useState<{ x: number; y: number; centerX: number; centerY: number } | null>(null)
+  const { t, language } = useLanguage()
   const mapRef = useRef<HTMLDivElement>(null)
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const mapInstanceRef = useRef<LeafletMap | null>(null)
+  const markersRef = useRef<Marker[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [mapError, setMapError] = useState<string | null>(null)
 
-  // Calculate bounds and center from midwives
   useEffect(() => {
-    if (midwives.length === 0) return
+    let mounted = true
 
-    if (midwives.length === 1) {
-      setCenter(midwives[0].coordinates)
-      setZoom(14)
-    } else {
-      // Calculate center point
-      const avgLng = midwives.reduce((sum, m) => sum + m.coordinates[0], 0) / midwives.length
-      const avgLat = midwives.reduce((sum, m) => sum + m.coordinates[1], 0) / midwives.length
-      setCenter([avgLng, avgLat])
-      setZoom(11)
-    }
-  }, [midwives])
+    const initializeMap = async () => {
+      if (!mapRef.current) return
 
-  // Generate OpenStreetMap tile URL
-  const generateTileUrl = (x: number, y: number, z: number) => {
-    return `https://tile.openstreetmap.org/${z}/${x}/${y}.png`
-  }
+      try {
+        setIsLoading(true)
+        setMapError(null)
 
-  // Convert lat/lng to tile coordinates
-  const latLngToTile = (lat: number, lng: number, zoom: number) => {
-    const x = Math.floor(((lng + 180) / 360) * Math.pow(2, zoom))
-    const y = Math.floor(
-      ((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) *
-        Math.pow(2, zoom)
-    )
-    return { x, y }
-  }
+        // Dynamic imports to avoid SSR issues
+        const L = await import("leaflet")
+        await import("leaflet/dist/leaflet.css")
+        await import("@maptiler/leaflet-maptilersdk")
 
-  // Convert coordinates to pixel position on the map - FIXED VERSION
-  const coordinateToPixel = (coord: [number, number]) => {
-    const mapWidth = 800
-    const mapHeight = 600
-    const tileSize = 256
+        // Fix for default markers in Leaflet
+        delete (L.Icon.Default.prototype as any)._getIconUrl
+        L.Icon.Default.mergeOptions({
+          iconRetinaUrl: '/marker-icon.png',
+          iconUrl: '/marker-icon.png',
+          shadowUrl: '/marker-icon.png',
+        })
 
-    // Get tile coordinates for both the point and center
-    const pointTile = latLngToTile(coord[1], coord[0], zoom)
-    const centerTile = latLngToTile(center[1], center[0], zoom)
+        if (!mounted) return
 
-    // Calculate pixel position within tiles
-    const scale = Math.pow(2, zoom)
-    
-    // Point position in world coordinates
-    const pointWorldX = ((coord[0] + 180) / 360) * scale
-    const pointWorldY = ((1 - Math.log(Math.tan((coord[1] * Math.PI) / 180) + 1 / Math.cos((coord[1] * Math.PI) / 180)) / Math.PI) / 2) * scale
-    
-    // Center position in world coordinates  
-    const centerWorldX = ((center[0] + 180) / 360) * scale
-    const centerWorldY = ((1 - Math.log(Math.tan((center[1] * Math.PI) / 180) + 1 / Math.cos((center[1] * Math.PI) / 180)) / Math.PI) / 2) * scale
+        // Calculate center and zoom based on midwives
+        let center: [number, number] = [52.2297, 21.0122] // Warsaw default
+        let zoom = 11
 
-    // Calculate pixel offset from center
-    const pixelX = (pointWorldX - centerWorldX) * tileSize + mapWidth / 2
-    const pixelY = (pointWorldY - centerWorldY) * tileSize + mapHeight / 2
+        if (midwives.length === 1) {
+          center = [midwives[0].coordinates[1], midwives[0].coordinates[0]]
+          zoom = 14
+        } else if (midwives.length > 1) {
+          // Calculate bounds
+          const lats = midwives.map(m => m.coordinates[1])
+          const lngs = midwives.map(m => m.coordinates[0])
+          const avgLat = lats.reduce((sum, lat) => sum + lat, 0) / lats.length
+          const avgLng = lngs.reduce((sum, lng) => sum + lng, 0) / lngs.length
+          center = [avgLat, avgLng]
+        }
 
-    return {
-      x: pixelX,
-      y: pixelY,
-    }
-  }
+        // Create map
+        const map = L.map(mapRef.current, {
+          center: L.latLng(center[0], center[1]),
+          zoom: zoom,
+          zoomControl: false, // We'll add custom controls
+          attributionControl: true,
+        })
 
-  const handleZoomIn = () => {
-    setZoom((prev) => Math.min(prev + 1, 18))
-  }
+        // Add MapTiler layer
+        const mtLayer = new (L as any).maptiler.maptilerLayer({
+          apiKey: "cM7IF9RAJLNUuMNpfjtq", // Free MapTiler API key
+          style: "streets-v2", // You can change this to other styles
+        }).addTo(map)
 
-  const handleZoomOut = () => {
-    setZoom((prev) => Math.max(prev - 1, 1))
-  }
+        mapInstanceRef.current = map
 
-  const handleReset = () => {
-    if (midwives.length === 0) {
-      setCenter([21.0122, 52.2297])
-      setZoom(11)
-    } else if (midwives.length === 1) {
-      setCenter(midwives[0].coordinates)
-      setZoom(14)
-    } else {
-      const avgLng = midwives.reduce((sum, m) => sum + m.coordinates[0], 0) / midwives.length
-      const avgLat = midwives.reduce((sum, m) => sum + m.coordinates[1], 0) / midwives.length
-      setCenter([avgLng, avgLat])
-      setZoom(11)
-    }
-    setSelectedMidwife(null)
-    setHoveredMidwife(null)
-  }
+        // Add markers
+        addMarkers(L, map)
 
-  const handleMarkerClick = (midwifeId: string) => {
-    setSelectedMidwife(selectedMidwife === midwifeId ? null : midwifeId)
-    if (onMarkerClick) {
-      onMarkerClick(midwifeId)
-    }
-  }
+        if (mounted) {
+          setIsLoading(false)
+        }
 
-  // Handle mouse wheel zoom
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault()
-    const delta = e.deltaY > 0 ? -1 : 1
-    setZoom((prev) => Math.max(1, Math.min(18, prev + delta)))
-  }
-
-  // Handle mouse drag start
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (e.button === 0) { // Left mouse button
-      setIsDragging(true)
-      setDragStart({
-        x: e.clientX,
-        y: e.clientY,
-        centerX: center[0],
-        centerY: center[1]
-      })
-    }
-  }
-
-  // Handle mouse drag - IMPROVED VERSION
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging && dragStart && mapRef.current) {
-      const deltaX = e.clientX - dragStart.x
-      const deltaY = e.clientY - dragStart.y
-      
-      // Convert pixel movement to coordinate movement
-      const scale = Math.pow(2, zoom)
-      const tileSize = 256
-      const mapWidth = 800
-      const mapHeight = 600
-      
-      // Calculate movement in world coordinates
-      const worldDeltaX = -deltaX / tileSize / scale
-      const worldDeltaY = -deltaY / tileSize / scale
-      
-      // Convert world delta to lat/lng delta
-      const deltaLng = worldDeltaX * 360
-      
-      // For latitude, convert from world coordinates back to degrees
-      const currentWorldY = ((1 - Math.log(Math.tan((dragStart.centerY * Math.PI) / 180) + 1 / Math.cos((dragStart.centerY * Math.PI) / 180)) / Math.PI) / 2)
-      const newWorldY = currentWorldY + worldDeltaY
-      
-      // Convert back to latitude
-      const newLatRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * newWorldY)))
-      const newLat = (newLatRad * 180) / Math.PI
-      
-      // Clamp latitude to valid range
-      const clampedLat = Math.max(-85, Math.min(85, newLat))
-      
-      setCenter([
-        dragStart.centerX + deltaLng,
-        clampedLat
-      ])
-    }
-  }
-
-  // Handle mouse drag end
-  const handleMouseUp = () => {
-    setIsDragging(false)
-    setDragStart(null)
-  }
-
-  // Handle mouse leave to stop dragging
-  const handleMouseLeave = () => {
-    setIsDragging(false)
-    setDragStart(null)
-  }
-
-  // Handle marker hover with debouncing
-  const handleMarkerHover = (midwifeId: string) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-    setHoveredMidwife(midwifeId)
-  }
-
-  const handleMarkerLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredMidwife(null)
-    }, 100) // Small delay to prevent flickering
-  }
-
-  // Generate map tiles for display
-  const generateMapTiles = () => {
-    const tileSize = 256
-    const mapWidth = 800
-    const mapHeight = 600
-    
-    const centerTile = latLngToTile(center[1], center[0], zoom)
-    const tilesX = Math.ceil(mapWidth / tileSize) + 1
-    const tilesY = Math.ceil(mapHeight / tileSize) + 1
-    
-    const tiles = []
-    
-    for (let x = centerTile.x - Math.floor(tilesX / 2); x <= centerTile.x + Math.floor(tilesX / 2); x++) {
-      for (let y = centerTile.y - Math.floor(tilesY / 2); y <= centerTile.y + Math.floor(tilesY / 2); y++) {
-        if (x >= 0 && y >= 0 && x < Math.pow(2, zoom) && y < Math.pow(2, zoom)) {
-          tiles.push({
-            x,
-            y,
-            url: generateTileUrl(x, y, zoom),
-            left: (x - centerTile.x) * tileSize + mapWidth / 2 - tileSize / 2,
-            top: (y - centerTile.y) * tileSize + mapHeight / 2 - tileSize / 2,
-          })
+      } catch (error) {
+        console.error("Failed to initialize map:", error)
+        if (mounted) {
+          setMapError("Failed to load map. Please try again.")
+          setIsLoading(false)
         }
       }
     }
-    
-    return tiles
+
+    const addMarkers = (L: any, map: LeafletMap) => {
+      // Clear existing markers
+      markersRef.current.forEach(marker => marker.remove())
+      markersRef.current = []
+
+      midwives.forEach((midwife, index) => {
+        // Create custom marker icon
+        const customIcon = L.divIcon({
+          className: 'custom-marker',
+          html: `
+            <div class="marker-container">
+              <div class="marker-pin">
+                <span class="marker-number">${index + 1}</span>
+              </div>
+              <div class="marker-shadow"></div>
+            </div>
+          `,
+          iconSize: [30, 40],
+          iconAnchor: [15, 40],
+          popupAnchor: [0, -40]
+        })
+
+        // Create marker
+        const marker = L.marker([midwife.coordinates[1], midwife.coordinates[0]], {
+          icon: customIcon
+        }).addTo(map)
+
+        // Create popup content
+        const popupContent = `
+          <div class="midwife-popup">
+            <div class="popup-header">
+              <img src="${midwife.imageUrl}" alt="${midwife.name}" class="popup-avatar" />
+              <div class="popup-info">
+                <h3 class="popup-name">${midwife.name}</h3>
+                <p class="popup-specialty">${midwife.specialty}</p>
+                <div class="popup-rating">
+                  <span class="rating-star">★</span>
+                  <span class="rating-value">${midwife.rating}</span>
+                  <span class="rating-count">(${midwife.reviewCount})</span>
+                </div>
+              </div>
+            </div>
+            <p class="popup-location">📍 ${midwife.location}</p>
+            <button class="popup-cta" onclick="window.handleMarkerClick('${midwife.id}')">
+              ${language === "pl" ? "Sprawdź usługi" : "Check Services"}
+            </button>
+          </div>
+        `
+
+        marker.bindPopup(popupContent, {
+          maxWidth: 280,
+          className: 'custom-popup'
+        })
+
+        // Add click handler
+        marker.on('click', () => {
+          if (onMarkerClick) {
+            onMarkerClick(midwife.id)
+          }
+        })
+
+        markersRef.current.push(marker)
+      })
+    }
+
+    // Global function for popup button clicks
+    ;(window as any).handleMarkerClick = (midwifeId: string) => {
+      if (onMarkerClick) {
+        onMarkerClick(midwifeId)
+      }
+    }
+
+    initializeMap()
+
+    return () => {
+      mounted = false
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove()
+        mapInstanceRef.current = null
+      }
+      markersRef.current = []
+      delete (window as any).handleMarkerClick
+    }
+  }, [midwives, onMarkerClick, language])
+
+  const handleZoomIn = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.zoomIn()
+    }
   }
 
-  const mapTiles = generateMapTiles()
+  const handleZoomOut = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.zoomOut()
+    }
+  }
+
+  const handleReset = () => {
+    if (!mapInstanceRef.current) return
+
+    if (midwives.length === 0) {
+      mapInstanceRef.current.setView([52.2297, 21.0122], 11)
+    } else if (midwives.length === 1) {
+      mapInstanceRef.current.setView([midwives[0].coordinates[1], midwives[0].coordinates[0]], 14)
+    } else {
+      // Fit bounds to show all markers
+      const group = new (window as any).L.featureGroup(markersRef.current)
+      mapInstanceRef.current.fitBounds(group.getBounds().pad(0.1))
+    }
+  }
 
   return (
-    <Card className={`overflow-hidden relative ${className}`}>
-      <div className="relative w-full h-full min-h-[400px]">
-        {/* Loading State */}
-        {isLoadingMap && (
-          <div className="absolute inset-0 bg-gray-100 flex items-center justify-center z-10">
-            <div className="flex items-center gap-2 text-gray-600">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Loading map...</span>
-            </div>
-          </div>
-        )}
+    <>
+      {/* Custom CSS for markers and popups */}
+      <style jsx global>{`
+        .custom-marker {
+          background: none !important;
+          border: none !important;
+        }
 
-        {/* Error State */}
-        {mapError && !isLoadingMap && (
-          <div className="absolute inset-0 bg-gray-100 flex items-center justify-center z-10">
-            <div className="text-center text-gray-600">
-              <p className="mb-2">{mapError}</p>
-              <Button variant="outline" onClick={() => window.location.reload()}>
-                Retry
-              </Button>
-            </div>
-          </div>
-        )}
+        .marker-container {
+          position: relative;
+          width: 30px;
+          height: 40px;
+        }
 
-        {/* Map Container */}
-        <div 
-          ref={mapRef}
-          className={`absolute inset-0 overflow-hidden ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          onWheel={handleWheel}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          style={{ userSelect: 'none' }}
-        >
-          {/* Map Tiles */}
-          {!isLoadingMap && !mapError && (
-            <div className="absolute inset-0 overflow-hidden">
-              {mapTiles.map((tile, index) => (
-                <img
-                  key={`${tile.x}-${tile.y}-${zoom}`}
-                  src={tile.url}
-                  alt=""
-                  className="absolute pointer-events-none"
-                  style={{
-                    left: tile.left,
-                    top: tile.top,
-                    width: 256,
-                    height: 256,
-                  }}
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                  draggable={false}
-                />
-              ))}
+        .marker-pin {
+          width: 30px;
+          height: 30px;
+          background: #ec4899;
+          border: 3px solid white;
+          border-radius: 50% 50% 50% 0;
+          transform: rotate(-45deg);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          transition: all 0.2s ease;
+        }
+
+        .marker-pin:hover {
+          transform: rotate(-45deg) scale(1.1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .marker-number {
+          color: white;
+          font-weight: bold;
+          font-size: 12px;
+          transform: rotate(45deg);
+        }
+
+        .marker-shadow {
+          position: absolute;
+          bottom: -5px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          height: 8px;
+          background: rgba(0,0,0,0.2);
+          border-radius: 50%;
+          filter: blur(2px);
+        }
+
+        .custom-popup .leaflet-popup-content-wrapper {
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+          border: none;
+        }
+
+        .custom-popup .leaflet-popup-content {
+          margin: 0;
+          padding: 0;
+        }
+
+        .midwife-popup {
+          padding: 16px;
+          min-width: 250px;
+        }
+
+        .popup-header {
+          display: flex;
+          gap: 12px;
+          margin-bottom: 12px;
+        }
+
+        .popup-avatar {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #f3f4f6;
+        }
+
+        .popup-info {
+          flex: 1;
+        }
+
+        .popup-name {
+          font-size: 16px;
+          font-weight: 600;
+          margin: 0 0 4px 0;
+          color: #1f2937;
+        }
+
+        .popup-specialty {
+          font-size: 12px;
+          color: #6b7280;
+          margin: 0 0 6px 0;
+        }
+
+        .popup-rating {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 12px;
+        }
+
+        .rating-star {
+          color: #fbbf24;
+        }
+
+        .rating-value {
+          font-weight: 600;
+          color: #1f2937;
+        }
+
+        .rating-count {
+          color: #6b7280;
+        }
+
+        .popup-location {
+          font-size: 12px;
+          color: #6b7280;
+          margin: 0 0 12px 0;
+        }
+
+        .popup-cta {
+          width: 100%;
+          background: #ec4899;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+
+        .popup-cta:hover {
+          background: #db2777;
+        }
+
+        .leaflet-container {
+          border-radius: 12px;
+        }
+      `}</style>
+
+      <Card className={`overflow-hidden relative ${className}`}>
+        <div className="relative w-full h-full min-h-[400px]">
+          {/* Loading State */}
+          {isLoading && (
+            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center z-10">
+              <div className="flex items-center gap-2 text-gray-600">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <span>Loading map...</span>
+              </div>
             </div>
           )}
 
-          {/* Interactive Markers Overlay */}
-          {!isLoadingMap && !mapError && (
-            <div className="absolute inset-0 pointer-events-none">
-              {midwives.map((midwife, index) => {
-                const pixelPos = coordinateToPixel(midwife.coordinates)
-                const isVisible = pixelPos.x >= -50 && pixelPos.x <= 850 && pixelPos.y >= -50 && pixelPos.y <= 650
+          {/* Error State */}
+          {mapError && !isLoading && (
+            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center z-10">
+              <div className="text-center text-gray-600">
+                <p className="mb-2">{mapError}</p>
+                <Button variant="outline" onClick={() => window.location.reload()}>
+                  Retry
+                </Button>
+              </div>
+            </div>
+          )}
 
-                if (!isVisible) return null
+          {/* Map Container */}
+          <div ref={mapRef} className="w-full h-full min-h-[400px]" />
 
-                return (
-                  <div key={midwife.id}>
-                    {/* Marker */}
-                    <div
-                      className={`absolute transform -translate-x-1/2 -translate-y-full transition-all duration-200 hover:scale-110 pointer-events-auto ${
-                        selectedMidwife === midwife.id ? "scale-110 z-20" : "z-10"
-                      }`}
-                      style={{
-                        left: pixelPos.x,
-                        top: pixelPos.y,
-                      }}
-                      onMouseEnter={() => handleMarkerHover(midwife.id)}
-                      onMouseLeave={handleMarkerLeave}
-                    >
-                      <button
-                        onClick={() => handleMarkerClick(midwife.id)}
-                        className="relative"
-                      >
-                        <div className="w-8 h-8 bg-pink-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-xs font-bold">
-                          {index + 1}
-                        </div>
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-pink-500"></div>
-                      </button>
+          {/* Map Controls */}
+          <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-white/90 backdrop-blur-sm"
+              onClick={handleZoomIn}
+              disabled={isLoading}
+            >
+              <ZoomIn className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-white/90 backdrop-blur-sm"
+              onClick={handleZoomOut}
+              disabled={isLoading}
+            >
+              <ZoomOut className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-white/90 backdrop-blur-sm"
+              onClick={handleReset}
+              disabled={isLoading}
+            >
+              <RotateCcw className="h-4 w-4" />
+            </Button>
+          </div>
 
-                      {/* Hover Tooltip */}
-                      {hoveredMidwife === midwife.id && (
-                        <div
-                          className="absolute z-40 bg-white rounded-lg shadow-xl border transform -translate-x-1/2 -translate-y-full mb-4 min-w-[280px] pointer-events-auto"
-                          style={{
-                            bottom: '100%',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            marginBottom: '8px'
-                          }}
-                          onMouseEnter={() => handleMarkerHover(midwife.id)}
-                          onMouseLeave={handleMarkerLeave}
-                        >
-                          <div className="p-4 space-y-3">
-                            <div className="flex items-start gap-3">
-                              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                                <Image
-                                  src={midwife.imageUrl || "/placeholder.svg"}
-                                  alt={midwife.name}
-                                  fill
-                                  className="object-cover"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-sm truncate">{midwife.name}</h3>
-                                <p className="text-xs text-gray-600 truncate">{midwife.specialty}</p>
-                                <div className="flex items-center mt-1">
-                                  <span className="text-yellow-500 text-sm">★</span>
-                                  <span className="text-xs ml-1">{midwife.rating}</span>
-                                  <span className="text-xs text-gray-500 ml-1">({midwife.reviewCount})</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="text-xs text-gray-500 truncate">
-                              📍 {midwife.location}
-                            </div>
-                            <Button 
-                              size="sm" 
-                              className="w-full text-xs h-8"
-                              onClick={() => handleMarkerClick(midwife.id)}
-                            >
-                              {t("language") === "pl" ? "Sprawdź usługi" : "Check Services"}
-                            </Button>
-                          </div>
-                          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
-                        </div>
-                      )}
+          {/* Legend */}
+          {midwives.length > 0 && !isLoading && !mapError && (
+            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 max-w-xs z-[1000]">
+              <h4 className="font-medium text-sm mb-2">Midwives ({midwives.length})</h4>
+              <div className="space-y-1 max-h-32 overflow-y-auto">
+                {midwives.slice(0, 5).map((midwife, index) => (
+                  <div key={midwife.id} className="flex items-center gap-2 text-xs">
+                    <div className="w-4 h-4 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                      {index + 1}
                     </div>
-
-                    {/* Click Popup */}
-                    {selectedMidwife === midwife.id && (
-                      <div
-                        className="absolute z-30 bg-white rounded-lg shadow-lg p-3 border transform -translate-x-1/2 -translate-y-full mb-2 min-w-[200px] pointer-events-auto"
-                        style={{
-                          left: pixelPos.x,
-                          top: pixelPos.y,
-                          transform: 'translate(-50%, calc(-100% - 8px))'
-                        }}
-                      >
-                        <div className="space-y-1">
-                          <h3 className="font-medium text-sm">{midwife.name}</h3>
-                          <p className="text-xs text-gray-600">{midwife.specialty}</p>
-                          <div className="flex items-center">
-                            <span className="text-yellow-500 text-sm">★</span>
-                            <span className="text-xs ml-1">{midwife.rating}</span>
-                            <span className="text-xs text-gray-500 ml-1">({midwife.reviewCount})</span>
-                          </div>
-                          <p className="text-xs text-gray-500">{midwife.location}</p>
-                        </div>
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
-                      </div>
-                    )}
+                    <span className="truncate">{midwife.name}</span>
                   </div>
-                )
-              })}
+                ))}
+                {midwives.length > 5 && (
+                  <div className="text-xs text-gray-500">+{midwives.length - 5} more</div>
+                )}
+              </div>
             </div>
           )}
-        </div>
 
-        {/* Map Controls */}
-        <div className="absolute top-4 right-4 flex flex-col gap-2 z-30">
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-white/90 backdrop-blur-sm pointer-events-auto"
-            onClick={handleZoomIn}
-            disabled={isLoadingMap || zoom >= 18}
-          >
-            <ZoomIn className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-white/90 backdrop-blur-sm pointer-events-auto"
-            onClick={handleZoomOut}
-            disabled={isLoadingMap || zoom <= 1}
-          >
-            <ZoomOut className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="bg-white/90 backdrop-blur-sm pointer-events-auto"
-            onClick={handleReset}
-            disabled={isLoadingMap}
-          >
-            <RotateCcw className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Legend */}
-        {midwives.length > 0 && !isLoadingMap && !mapError && (
-          <div className="absolute bottom-12 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 max-w-xs z-30">
-            <h4 className="font-medium text-sm mb-2">Midwives ({midwives.length})</h4>
-            <div className="space-y-1 max-h-32 overflow-y-auto">
-              {midwives.slice(0, 5).map((midwife, index) => (
-                <div key={midwife.id} className="flex items-center gap-2 text-xs">
-                  <div className="w-4 h-4 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                    {index + 1}
-                  </div>
-                  <span className="truncate">{midwife.name}</span>
-                </div>
-              ))}
-              {midwives.length > 5 && <div className="text-xs text-gray-500">+{midwives.length - 5} more</div>}
-            </div>
+          {/* Instructions */}
+          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-xs text-gray-600 z-[1000]">
+            <div>🖱️ {language === "pl" ? "Przeciągnij aby przesunąć" : "Drag to pan"}</div>
+            <div>🔍 {language === "pl" ? "Scroll aby powiększyć" : "Scroll to zoom"}</div>
           </div>
-        )}
-
-        {/* Attribution */}
-        <div className="absolute bottom-2 right-2 text-xs text-gray-500 bg-white/80 px-2 py-1 rounded z-30">
-          © OpenStreetMap contributors
         </div>
-
-        {/* Instructions */}
-        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-xs text-gray-600 z-30">
-          <div>🖱️ {t("language") === "pl" ? "Przeciągnij aby przesunąć" : "Drag to pan"}</div>
-          <div>🔍 {t("language") === "pl" ? "Scroll aby powiększyć" : "Scroll to zoom"}</div>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </>
   )
 }
