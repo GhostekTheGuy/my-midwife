@@ -434,7 +434,7 @@ const translations = {
       menu: "Przełącz menu",
       search: "Szukaj",
       notifications: "Powiadomienia",
-      home: "Strona główna",
+      home: "Homepage",
       appointments: "Wizyty",
       chat: "Czat",
       diary: "Dziennik",
